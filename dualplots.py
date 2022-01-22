@@ -145,3 +145,4 @@ ax.plot3D(ux, uy, uz, 'red', marker="o")
 #showing plot
 matplotlib.pyplot.show()
 
+#trying to extract values from tables

@@ -42,11 +42,11 @@ alpha6 = 0*(pi/180)
 #note that they are 4 dimensional so they can be used with homogenous transforms with the last 'W' coordinate always 1
 #(to facilitate translation as well as rotation)
 p1 = Matrix([0, 0, 0, 1])
-p2 = Matrix([500, 0, 1045, 1])
-p3 = Matrix([500, 0, 1045+1300, 1])
-p4 = Matrix([500+710, 0, 1045+1300-55, 1])
-p5 = Matrix([500+710+315, 0, 1045+1300-55, 1])
-p6 = Matrix([500+710+315+290, 0, 1045+1300-55, 1])
+p2 = Matrix([a1, 0, d1, 1])
+p3 = Matrix([a1, 0, d1+a2, 1])
+p4 = Matrix([a1+710, 0, d1+a2-a3, 1])
+p5 = Matrix([a1+d4, 0, d1+a2-a3, 1])
+p6 = Matrix([a1+d4+d6, 0, d1+a2-a3, 1])
 
 
 #concatenate these points into a column

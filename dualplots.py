@@ -20,13 +20,13 @@ a6 = 0
 d1 = 1045
 d2 = 0
 d3 = 0
-d4 = 1525
+d4 = 1025
 d5 = 0
 d6 = 290
 
 theta1 = 0
 theta2 = 0
-theta3 = 30*(pi/180)
+theta3 = 0
 theta4 = 0
 theta5 = 0
 theta6 = 0

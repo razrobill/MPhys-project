@@ -21,8 +21,8 @@ d1 = 1045
 d2 = 0
 d3 = 0
 d4 = 1025
-d5 = 0
-d6 = 290
+d5 = 290
+d6 = 0
 
 theta1 = 0
 theta2 = 0
@@ -51,6 +51,12 @@ alpha6 = 0*(pi/180)
 
 #d-h parameters table
 
+p0 = [0, 0, 0, 1]
+p0x = (p0[0])
+p0y = (p0[1])
+p0z = (p0[2])
+
+
 d_h_table_0_1 = np.array([[cos(theta1), -sin(theta1)*cos(alpha1), sin(theta1)*sin(alpha1), a1*cos(theta1)],
                         [sin(theta1), cos(theta1)*cos(alpha1), -cos(theta1)*sin(alpha1), a1*sin(theta1)],
                         [0, sin(alpha1), cos(alpha1), d1],
@@ -75,11 +81,10 @@ transform_1_2 = d_h_table_1_2
 last_column2 = transform_1_2[:, 3]
 p2 = np.delete(last_column2, 3, 0)
 p2x = p1x
-print(p2x)
+#print(p2x)
 p2y = np.unique(p2[1])
-p2z = np.unique(p2[2]) +p1z
-print(p2z)
-
+p2z = np.unique(p2[2]) +p1z + np.unique(p2[0])
+#print(p2z)
 
 
 d_h_table_2_3 = np.array([[cos(theta3), -sin(theta3)*cos(alpha3), sin(theta3)*sin(alpha3), a3*cos(theta3)],
@@ -87,15 +92,39 @@ d_h_table_2_3 = np.array([[cos(theta3), -sin(theta3)*cos(alpha3), sin(theta3)*si
                           [0, sin(alpha3), cos(alpha3), d3],
                           [0, 0, 0, 1]])
 
+transform_2_3 = d_h_table_2_3
+last_column3 = transform_2_3[:, 3]
+p3 = np.delete(last_column3, 3, 0)
+p3x = p1x + 710
+#print(p3x)
+p3y = np.unique(p3[1])
+p3z = p2z - np.unique(p3[0])
+#print(p3z)
+
 d_h_table_3_4 = np.array([[cos(theta4), -sin(theta4)*cos(alpha4), sin(theta4)*sin(alpha4), a4*cos(theta4)],
                           [sin(theta4), cos(theta4)*cos(alpha4), -cos(theta4)*sin(alpha4), a4*sin(theta4)],
                           [0, sin(alpha4), cos(alpha4), d4],
                           [0, 0, 0, 1]])
 
+transform_3_4 = d_h_table_3_4
+last_column4 = transform_3_4[:, 3]
+p4 = np.delete(last_column4, 3, 0)
+p4x = p2x + np.unique(p4[2])
+print(p4x)
+p4y = np.unique(p4[1])
+p4z = p3z
+
 d_h_table_4_5 = np.array([[cos(theta5), -sin(theta5)*cos(alpha5), sin(theta5)*sin(alpha5), a5*cos(theta5)],
                           [sin(theta5), cos(theta5)*cos(alpha5), -cos(theta5)*sin(alpha5), a5*sin(theta5)],
                           [0, sin(alpha5), cos(alpha5), d5],
                           [0, 0, 0, 1]])
+
+transform_4_5 = d_h_table_4_5
+last_column5 = transform_4_5[:, 3]
+p5 = np.delete(last_column5, 3, 0)
+p5x = p4x + np.unique(p5[2])
+p5y = np.unique(p5[1])
+p5z = p4z
 
 d_h_table_5_6 = np.array([[cos(theta6), -sin(theta6)*cos(alpha6), sin(theta6)*sin(alpha6), a6*cos(theta6)],
                           [sin(theta6), cos(theta6)*cos(alpha6), -cos(theta6)*sin(alpha6), a6*sin(theta6)],
@@ -142,8 +171,12 @@ uz = np.unique(end_effector_positon[2])
 
 #adding the final end effector position to the plot
 ax.plot3D(ux, uy, uz, 'red', marker="o")
+ax.plot3D(p0x, p0y, p0z, 'blue', marker="o")
 ax.plot3D(p1x, p1y, p1z, 'blue', marker="o")
 ax.plot3D(p2x, p2y, p2z, 'blue', marker="o")
+ax.plot3D(p3x, p3y, p3z, 'blue', marker="o")
+ax.plot3D(p4x, p4y, p4z, 'blue', marker="o")
+ax.plot3D(p5x, p5y, p5z, 'blue', marker="o")
 
 #showing plot
 matplotlib.pyplot.show()

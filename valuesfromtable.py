@@ -24,7 +24,7 @@ d4 = 720
 d5 = 0
 d6 = 290
 
-theta1 = 0
+theta1 = 90*(pi/180)
 theta2 = 90*(pi/180)
 theta3 = 0
 theta4 = 0
@@ -77,7 +77,7 @@ d_h_table_1_2 = np.array([[cos(theta2), -sin(theta2)*cos(alpha2), sin(theta2)*si
                         [0, sin(alpha2), cos(alpha2), d2],
                         [0, 0, 0, 1]])
 
-transform_1_2 = d_h_table_0_1 @ d_h_table_1_2
+transform_1_2 = transform_0_1 @ d_h_table_1_2
 last_column2 = transform_1_2[:, 3]
 p2 = np.delete(last_column2, 3, 0)
 print(p2)
@@ -92,7 +92,7 @@ d_h_table_2_3 = np.array([[cos(theta3), -sin(theta3)*cos(alpha3), sin(theta3)*si
                           [0, sin(alpha3), cos(alpha3), d3],
                           [0, 0, 0, 1]])
 
-transform_2_3 = d_h_table_2_3 @ d_h_table_1_2 @ d_h_table_0_1
+transform_2_3 = transform_1_2 @ d_h_table_2_3
 last_column3 = transform_2_3[:, 3]
 p3 = np.delete(last_column3, 3, 0)
 print(p3)
@@ -106,7 +106,7 @@ d_h_table_3_4 = np.array([[cos(theta4), -sin(theta4)*cos(alpha4), sin(theta4)*si
                           [0, sin(alpha4), cos(alpha4), d4],
                           [0, 0, 0, 1]])
 
-transform_3_4 = d_h_table_3_4 @ d_h_table_2_3 @ d_h_table_1_2 @ d_h_table_0_1
+transform_3_4 = transform_2_3 @ d_h_table_3_4
 last_column4 = transform_3_4[:, 3]
 p4 = np.delete(last_column4, 3, 0)
 print(p4)
@@ -119,7 +119,7 @@ d_h_table_4_5 = np.array([[cos(theta5), -sin(theta5)*cos(alpha5), sin(theta5)*si
                           [0, sin(alpha5), cos(alpha5), d5],
                           [0, 0, 0, 1]])
 
-transform_4_5 = d_h_table_4_5 @ d_h_table_3_4 @ d_h_table_2_3 @ d_h_table_1_2 @ d_h_table_0_1
+transform_4_5 = transform_3_4 @ d_h_table_4_5
 last_column5 = transform_4_5[:, 3]
 p5 = np.delete(last_column5, 3, 0)
 print(p5)
@@ -132,9 +132,12 @@ d_h_table_5_6 = np.array([[cos(theta6), -sin(theta6)*cos(alpha6), sin(theta6)*si
                           [0, sin(alpha6), cos(alpha6), d6],
                           [0, 0, 0, 1]])
 
-transform_5_6 = d_h_table_5_6 @ d_h_table_4_5 @ d_h_table_3_4 @ d_h_table_2_3 @d_h_table_1_2 @ d_h_table_0_1
+transform_5_6 = transform_4_5 @ d_h_table_5_6
 last_column6 = transform_5_6[:, 3]
 p6 = np.delete(last_column6, 3, 0)
+p6x = np.unique(p6[0])
+p6y = np.unique(p6[1])
+p6z = np.unique(p6[2])
 print(p6)
 
 #multiplying to find transformation from frame 0 to 6
@@ -142,8 +145,8 @@ print(p6)
 
 transform_0_6 = d_h_table_0_1 @ d_h_table_1_2 @ d_h_table_2_3 @ d_h_table_3_4 @ d_h_table_4_5 @ d_h_table_5_6
 
-print("Homogeneous Matrix from frame 0 to frame 6:  ")
-print(transform_0_6)
+#print("Homogeneous Matrix from frame 0 to frame 6:  ")
+#print(transform_0_6)
 
 #the final T vector contains the position of the end effector, the R matrix contains the orientation
 #of the end effector
@@ -183,6 +186,7 @@ ax.plot3D(p2x, p2y, p2z, 'blue', marker="o")
 ax.plot3D(p3x, p3y, p3z, 'blue', marker="o")
 ax.plot3D(p4x, p4y, p4z, 'blue', marker="o")
 ax.plot3D(p5x, p5y, p5z, 'blue', marker="o")
+ax.plot3D(p6x, p6y, p6z, 'blue', marker="o")
 
 #showing plot
 matplotlib.pyplot.show()

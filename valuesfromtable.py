@@ -12,7 +12,7 @@ from sympy import init_printing
 #d-h parameters in mm
 a1 = 500
 a2 = 1300
-a3 = 55
+a3 = -55
 a4 = 0
 a5 = 0
 a6 = 0
@@ -27,8 +27,8 @@ d6 = 290
 theta1 = 90*(pi/180)
 theta2 = 90*(pi/180)
 theta3 = 0
-theta4 = 0
-theta5 = 0
+theta4 = 90*(pi/180)
+theta5 = 90*(pi/180)
 theta6 = 0
 
 alpha1 = 90*(pi/180)
@@ -55,6 +55,7 @@ p0 = [0, 0, 0, 1]
 p0x = (p0[0])
 p0y = (p0[1])
 p0z = (p0[2])
+print(p0)
 
 
 d_h_table_0_1 = np.array([[cos(theta1), -sin(theta1)*cos(alpha1), sin(theta1)*sin(alpha1), a1*cos(theta1)],
@@ -66,9 +67,10 @@ transform_0_1 = d_h_table_0_1
 last_column1 = transform_0_1[:, 3]
 p1 = np.delete(last_column1, 3, 0)
 print(p1)
-p1x = np.unique(p1[0]) +p0x
-p1y = np.unique(p1[1]) +p0y
-p1z = np.unique(p1[2]) +p0z
+p1x = np.unique(p1[0])
+p1y = np.unique(p1[1])
+p1z = np.unique(p1[2])
+
 
 
 
@@ -186,7 +188,7 @@ ax.plot3D(p2x, p2y, p2z, 'blue', marker="o")
 ax.plot3D(p3x, p3y, p3z, 'blue', marker="o")
 ax.plot3D(p4x, p4y, p4z, 'blue', marker="o")
 ax.plot3D(p5x, p5y, p5z, 'blue', marker="o")
-ax.plot3D(p6x, p6y, p6z, 'blue', marker="o")
+#ax.plot3D(p6x, p6y, p6z, 'blue', marker="o")
 
 #showing plot
 matplotlib.pyplot.show()

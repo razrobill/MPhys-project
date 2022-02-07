@@ -24,11 +24,11 @@ d4 = 720
 d5 = 0
 d6 = 290
 
-theta1 = 90*(pi/180)
+theta1 = 0*(pi/180)
 theta2 = 90*(pi/180)
-theta3 = 0
+theta3 = 0*(pi/180)
 theta4 = 90*(pi/180)
-theta5 = 90*(pi/180)
+theta5 = 0*(pi/180)
 theta6 = 0
 
 alpha1 = 90*(pi/180)
@@ -136,8 +136,8 @@ print(p6)
 
 transform_0_6 = d_h_table_0_1 @ d_h_table_1_2 @ d_h_table_2_3 @ d_h_table_3_4 @ d_h_table_4_5 @ d_h_table_5_6
 
-#print("Homogeneous Matrix from frame 0 to frame 6:  ")
-#print(transform_0_6)
+print("Homogeneous Matrix from frame 0 to frame 6:  ")
+print(transform_0_6)
 
 #the final T vector contains the position of the end effector, the R matrix contains the orientation
 #of the end effector
@@ -148,6 +148,15 @@ last_column = transform_0_6[:, 3]
 
 end_effector_positon = np.delete(last_column, 3, 0)
 #print(end_effector_positon)
+
+#extracting the 3x3 matrix representing the orientation of the end effector
+rotation_matrix = [x[:3] for x in transform_0_6[:3]]
+#removing dtype at the end of array
+rotation_matrix = np.array(rotation_matrix, dtype='int')
+print(rotation_matrix)
+
+end_effector_orientation = rotation_matrix * end_effector_positon
+print(end_effector_orientation)
 
 #creating axis
 fig = matplotlib.pyplot.figure()
@@ -170,7 +179,7 @@ uz = np.unique(end_effector_positon[2])
 
 
 #adding the final end effector position to the plot
-ax.plot3D(ux, uy, uz, 'red', marker="o")
+ax.plot3D(ux, uy, uz, 'red', marker="^")
 ax.plot3D(p0x, p0y, p0z, 'blue', marker="o")
 ax.plot3D(p1x, p1y, p1z, 'blue', marker="o")
 ax.plot3D(p2x, p2y, p2z, 'blue', marker="o")

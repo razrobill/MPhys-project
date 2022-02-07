@@ -3,6 +3,7 @@ import numpy
 import matplotlib.pyplot
 import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
+import sympy as sp
 from sympy import Matrix, Symbol, symbols, solveset
 from sympy import S, erf, log, sqrt, pi, sin, cos, tan
 from sympy import init_printing
@@ -150,13 +151,13 @@ end_effector_positon = np.delete(last_column, 3, 0)
 #print(end_effector_positon)
 
 #extracting the 3x3 matrix representing the orientation of the end effector
-rotation_matrix = [x[:3] for x in transform_0_6[:3]]
-#removing dtype at the end of array
-rotation_matrix = np.array(rotation_matrix, dtype='int')
-print(rotation_matrix)
+#print(rotation_matrix)
+rotationmatrix = transform_0_6[0:3,0:3]
+print(rotationmatrix)
 
-end_effector_orientation = rotation_matrix * end_effector_positon
-print(end_effector_orientation)
+
+#end_effector_orientation = rotation_matrix * end_effector_positon
+#print(end_effector_orientation)
 
 #creating axis
 fig = matplotlib.pyplot.figure()

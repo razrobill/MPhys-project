@@ -173,6 +173,7 @@ ax.set_ylim([-200, 2000])
 ax.set_zlim([-200, 2000])
 
 
+
 ux = np.unique(end_effector_positon[0])
 uy = np.unique(end_effector_positon[1])
 uz = np.unique(end_effector_positon[2])

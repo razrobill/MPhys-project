@@ -20,14 +20,14 @@ z = 0
 
 #calculating angle of second joint
 theta1 = np.arctan(y/x)
-print(f'theta 1 = {theta2} radians')
+print(f'theta 1 = {theta1} radians')
 
 #desired orientation of end effector relative to base frame
 #desired orientation
 #rotation matrix of frame 6 relative to frame 0
-rotation_0_6 = np.array([[0, 0, 1],
-                        [0, -1, 0],
-                        [1, 0, 0]])
+#INPUT THIS DIRECTLY FROM FORWARD KINEMATICS
+rotation_0_6 = transform_0_6[0:3, 0:3]
+print(rotation_0_6)
 
 #rotation matrix of frame 3 relative to frame 0
 rotation_0_3 = transform_2_3[0:3,0:3]
@@ -47,8 +47,8 @@ print(f'rotation_3_6 = \n {rotation_3_6}')
 
 #extracting theta 5 from rotation matrix 3-6 (starting with this as it is the simplest value)
 #it is in the 3rd column 3rd row
-theta_5 = np.arccos(rotation_3_6[2,2])
-print(f'\n theta 5 = {theta_5} radians')
+#theta_5 = np.arccos(rotation_3_6[2,2])
+#print(f'\n theta 5 = {theta_5} radians')
 
 #finding theta 6
 #theta_6 = np.arccos(rotation_3_6[2,0] / -np.sin(theta_5))

@@ -199,6 +199,8 @@ uz = np.unique(end_effector_position[2])
 #showing plot
 matplotlib.pyplot.show()
 
+init_printing()
+
 #print('T1=', transform_0_1, '\n\nT2=', transform_1_2, '\n\nT3=', transform_2_3, '\n\nT4=', transform_3_4, '\n\nT5=', transform_4_5, '\n\nT6=', transform_5_6)
 #print('p1=', p1, '\n\np2=', p2, '\n\np3=', p3, '\n\np4=', p4, '\n\np5=', p5, '\n\np6=', p6)
 
@@ -253,12 +255,23 @@ theta_i = Matrix([0, 90*(pi/180),0,0,0,0])
 #calculating numerical value of J at each point
 Jsub = J.subs({theta1:theta_i[0], theta2:theta_i[1], theta3:theta_i[2],
                theta4:theta_i[3], theta5:theta_i[4], theta6:theta_i[5]})
+
+#to evaluate the overall value for each element of the expression
 Jeval = Jsub.evalf()
+print('\n\n\nJeval=', Jeval)
 
 #solving for values of theta
-print(solve(Jeval*dtheta-dp,(dtheta1, dtheta2, dtheta3, dtheta4, dtheta5, dtheta6)))
+#print(solve(Jeval*dtheta-dp,(dtheta1, dtheta2, dtheta3, dtheta4, dtheta5, dtheta6)))
 
+#to solve and find values of theta that work for reaching the new point
+sol = solve(Jeval * dtheta - dp , dtheta)
+theta_f = theta_i + dtheta
+print('\nsol=', sol)
+print(dtheta) #i think perhps this isn't working because i've not explicitly said dtheta1, dtheta2 etc like I did previously
 
+print('theta_i=', theta_i)
+
+p0sub = p0.subs({theta1:theta_i[0], theta2:theta_i[1], theta3:theta})
 
 
 

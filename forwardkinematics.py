@@ -7,6 +7,7 @@ import sympy as sp
 from sympy import Matrix, Symbol, symbols, solveset
 from sympy import S, erf, log, sqrt, pi, sin, cos, tan
 from sympy import init_printing
+from scipy.spatial.transform import Rotation
 
 #kinematics simulator
 
@@ -153,7 +154,7 @@ end_effector_position = np.delete(last_column, 3, 0)
 #extracting the 3x3 matrix representing the orientation of the end effector
 #print(rotation_matrix)
 rotationmatrix = transform_0_6[0:3,0:3]
-#print(rotationmatrix)
+print(rotationmatrix)
 
 
 #end_effector_orientation = rotation_matrix * end_effector_position
@@ -189,6 +190,18 @@ ax.plot3D(p3x, p3y, p3z, 'blue', marker="o")
 ax.plot3D(p4x, p4y, p4z, 'blue', marker="o")
 ax.plot3D(p5x, p5y, p5z, 'blue', marker="o")
 #ax.plot3D(p6x, p6y, p6z, 'blue', marker="o")
+
+#x_direction = ux
+#y_direction = uy
+#z_direction = uz
+
+#endeffectorqx = ax.quiver(ux, uy, uz, x_direction, 0, 0)
+#q0 = ax.quiver(p0x, p0y, p0z, p0x, p0y, p0z)
+#q1 = ax.quiver(p1x, p1y, p1z, p1x, p1y, p1z)
+
+#print(rotationmatrix.evalf)
+
+
 
 #showing plot
 matplotlib.pyplot.show()

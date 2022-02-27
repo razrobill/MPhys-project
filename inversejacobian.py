@@ -47,21 +47,22 @@ alpha6 = 0*(pi/180)
 
 #d-h parameters table
 
-p0 = [0, 0, 0, 1]
+p0 = Matrix([0, 0, 0, 1])
 p0x = (p0[0])
 p0y = (p0[1])
 p0z = (p0[2])
 #print(p0)
 
 
-d_h_table_0_1 = np.array([[cos(theta1), -sin(theta1)*cos(alpha1), sin(theta1)*sin(alpha1), a1*cos(theta1)],
+d_h_table_0_1 = Matrix([[cos(theta1), -sin(theta1)*cos(alpha1), sin(theta1)*sin(alpha1), a1*cos(theta1)],
                         [sin(theta1), cos(theta1)*cos(alpha1), -cos(theta1)*sin(alpha1), a1*sin(theta1)],
                         [0, sin(alpha1), cos(alpha1), d1],
                         [0, 0, 0, 1]])
 
 transform_0_1 = d_h_table_0_1
 last_column1 = transform_0_1[:, 3]
-p1 = np.delete(last_column1, 3, 0)
+deletion1 = np.delete(last_column1, 3, 0)
+p1 = Matrix(deletion1)
 #print(p1)
 p1x = np.unique(p1[0])
 p1y = np.unique(p1[1])
@@ -241,7 +242,7 @@ print(J.shape)
 #defining for small movements
 dtheta1, dtheta2, dtheta3, dtheta4, dtheta5, dtheta6 = symbols('dtheta_1 dtheta_2 dtheta_3 dtheta_4 dtheta_5 dtheta_6')
 dtheta = Matrix([dtheta1, dtheta2, dtheta3, dtheta4, dtheta5, dtheta6])
-dp = Matrix([0.0, 0.01, 0])
+dp = Matrix([0, 100, 0])
 p_f = p_i + dp
 
 #initial position - this is the set up position shown in the workspace diagram
@@ -267,11 +268,21 @@ print('\n\n\nJeval=', Jeval)
 sol = solve(Jeval * dtheta - dp , dtheta)
 theta_f = theta_i + dtheta
 print('\nsol=', sol)
-print(dtheta) #i think perhps this isn't working because i've not explicitly said dtheta1, dtheta2 etc like I did previously
+#print(dtheta) #i think perhps this isn't working because i've not explicitly said dtheta1, dtheta2 etc like I did previously
 
-print('theta_i=', theta_i)
 
-p0sub = p0.subs({theta1:theta_i[0], theta2:theta_i[1], theta3:theta})
+#initial theta values that give the initial configuration
+#print('theta_i=', theta_i)
+
+p0sub = p0.subs({theta1:theta_i[0], theta2:theta_i[1], theta3:theta_i[2], theta4:theta_i[3],
+                 theta5:theta_i[4], theta6:theta_i[5]})
+#print(p0sub)
+
+p1sub = p1.subs({theta1:theta_i[0], theta2:theta_i[1], theta3:theta_i[2], theta4:theta_i[3],
+                 theta5:theta_i[4], theta6:theta_i[5]})
+#print(p1sub)
+
+
 
 
 

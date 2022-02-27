@@ -8,6 +8,9 @@ from sympy import Matrix, Symbol, symbols, solveset
 from sympy import S, erf, log, sqrt, pi, sin, cos, tan
 from sympy import init_printing
 from scipy.spatial.transform import Rotation
+import math
+
+
 
 #kinematics simulator
 
@@ -153,8 +156,14 @@ end_effector_position = np.delete(last_column, 3, 0)
 
 #extracting the 3x3 matrix representing the orientation of the end effector
 #print(rotation_matrix)
-rotationmatrix = transform_0_6[0:3,0:3]
-print(rotationmatrix)
+rotationmatrix1 = transform_0_1[0:3,0:3]
+rotationmatrix2 = transform_1_2[0:3,0:3]
+rotationmatrix3 = transform_2_3[0:3,0:3]
+rotationmatrix4 = transform_3_4[0:3,0:3]
+rotationmatrix5 = transform_4_5[0:3,0:3]
+rotationmatrix6 = transform_5_6[0:3,0:3]
+rotationmatrix7 = transform_0_6[0:3,0:3]
+print(rotationmatrix1)
 
 
 #end_effector_orientation = rotation_matrix * end_effector_position
@@ -170,9 +179,9 @@ ax.set_ylabel("Y")
 ax.set_zlabel("Z")
 
 #add axis limits
-ax.set_xlim([-200, 2000])
-ax.set_ylim([-200, 2000])
-ax.set_zlim([-200, 2000])
+ax.set_xlim([-1500, 2000])
+ax.set_ylim([-1500, 2000])
+ax.set_zlim([-1500, 2000])
 
 
 
@@ -196,10 +205,46 @@ ax.plot3D(p5x, p5y, p5z, 'blue', marker="o")
 #z_direction = uz
 
 #endeffectorqx = ax.quiver(ux, uy, uz, x_direction, 0, 0)
-#q0 = ax.quiver(p0x, p0y, p0z, p0x, p0y, p0z)
-#q1 = ax.quiver(p1x, p1y, p1z, p1x, p1y, p1z)
+q0x = ax.quiver(p0x, p0y, p0z, 300, 0, 0, color='b')
+q0y = ax.quiver(p0x, p0y, p0z, 0, 300, 0, color='r')
+q0z = ax.quiver(p0x, p0y, p0z, 0, 0, 300, color='g')
+
+q1y = ax.quiver(p1x, p1y, p1z, 300, 0, 0, color='b')
+q1z = ax.quiver(p1x, p1y, p1z, 0, 300, 0, color='g')
+q1x = ax.quiver(p1x, p1y, p1z, 0, 0, 300, color='r')
+
+q2z = ax.quiver(p2x, p2y, p2z, 0, 300, 0, color='g')
+q2y = ax.quiver(p2x, p2y, p2z, 300, 0, 0, color='r')
+q2x = ax.quiver(p2x, p2y, p2z, 0, 0, 300, color='b')
+
+q3z = ax.quiver(p3x, p3y, p3z, 300, 0, 0, color='g')
+q3y = ax.quiver(p3x, p3y, p3z, 0, 300, 0, color='r')
+q3x = ax.quiver(p3x, p3y, p3z, 0, 0, 300, color='b')
+
+q4y = ax.quiver(p4x, p4y, p4z, 300, 0, 0, color='r')
+q4z = ax.quiver(p4x, p4y, p4z, 0, 300, 0, color='g')
+q4x = ax.quiver(p4x, p4y, p4z, 0, 0, 300, color='b')
+
+q5z = ax.quiver(p5x, p5y, p5z, 300, 0, 0, color='g')
+q5y = ax.quiver(p5x, p5y, p5z, 0, 300, 0, color='r')
+q5x = ax.quiver(p5x, p5y, p5z, 0, 0, 300, color='b')
+
+
 
 #print(rotationmatrix.evalf)
+
+#euler angles
+thetax = math.atan2(0, sin(pi/9))
+#print(thetax)
+
+thetay = math.atan2(-cos(pi/9), sqrt(0**2 + (sin(pi/9)**2)))
+#print(thetay)
+
+thetaz = math.atan2(0, -sin(pi/9))
+#print(thetaz)
+
+euler_angles = np.array([thetax, thetay, thetaz])
+
 
 
 

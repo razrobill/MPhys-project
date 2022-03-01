@@ -54,3 +54,6 @@ print(f'rotation_3_6 = \n {rotation_3_6}')
 #theta_6 = np.arccos(rotation_3_6[2,0] / -np.sin(theta_5))
 #print(f'\n theta 6 = {theta_6} radians')
 
+
+
+

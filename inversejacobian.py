@@ -78,8 +78,9 @@ d_h_table_1_2 = np.array([[cos(theta2), -sin(theta2)*cos(alpha2), sin(theta2)*si
 
 transform_1_2 = transform_0_1 @ d_h_table_1_2
 last_column2 = transform_1_2[:, 3]
-p2 = np.delete(last_column2, 3, 0)
+deletionp2 = np.delete(last_column2, 3, 0)
 #print(p2)
+p2 = Matrix(deletionp2)
 p2x = np.unique(p2[0])
 p2y = np.unique(p2[1])
 p2z = np.unique(p2[2])
@@ -95,6 +96,7 @@ transform_2_3 = transform_1_2 @ d_h_table_2_3
 last_column3 = transform_2_3[:, 3]
 p3 = np.delete(last_column3, 3, 0)
 #print(p3)
+p3 = Matrix(p3)
 p3x = np.unique(p3[0])
 p3y = np.unique(p3[1])
 p3z = np.unique(p3[2])
@@ -109,6 +111,7 @@ transform_3_4 = transform_2_3 @ d_h_table_3_4
 last_column4 = transform_3_4[:, 3]
 p4 = np.delete(last_column4, 3, 0)
 #print(p4)
+p4 = Matrix(p4)
 p4x = np.unique(p4[0])
 p4y = np.unique(p4[1])
 p4z = np.unique(p4[2])
@@ -122,6 +125,7 @@ transform_4_5 = transform_3_4 @ d_h_table_4_5
 last_column5 = transform_4_5[:, 3]
 p5 = np.delete(last_column5, 3, 0)
 #print(p5)
+p5 = Matrix(p5)
 p5x = np.unique(p5[0])
 p5y = np.unique(p5[1])
 p5z = np.unique(p5[2])
@@ -134,6 +138,7 @@ d_h_table_5_6 = np.array([[cos(theta6), -sin(theta6)*cos(alpha6), sin(theta6)*si
 transform_5_6 = transform_4_5 @ d_h_table_5_6
 last_column6 = transform_5_6[:, 3]
 p6 = np.delete(last_column6, 3, 0)
+p6 = Matrix(p6)
 p6x = np.unique(p6[0])
 p6y = np.unique(p6[1])
 p6z = np.unique(p6[2])
@@ -143,6 +148,13 @@ p6z = np.unique(p6[2])
 #(@ symbol used for matrix multiplication)
 
 transform_0_6 = d_h_table_0_1 @ d_h_table_1_2 @ d_h_table_2_3 @ d_h_table_3_4 @ d_h_table_4_5 @ d_h_table_5_6
+
+transform_0_3 = d_h_table_0_1 @ d_h_table_1_2 @ d_h_table_2_3
+print(transform_0_3)
+rotation_matrix_0_6 = np.array([-1, 0, 0],
+                               [0, -1, 0],
+                               [0, 0, 1])
+
 
 #print("Homogeneous Matrix from frame 0 to frame 6:  ")
 #print(transform_0_6)
@@ -161,6 +173,9 @@ end_effector_position = np.delete(last_column, 3, 0)
 #print(rotation_matrix)
 rotationmatrix = transform_0_6[0:3,0:3]
 #print(rotationmatrix)
+
+
+
 
 
 #end_effector_orientation = rotation_matrix * end_effector_position
@@ -276,11 +291,13 @@ print('\nsol=', sol)
 
 p0sub = p0.subs({theta1:theta_i[0], theta2:theta_i[1], theta3:theta_i[2], theta4:theta_i[3],
                  theta5:theta_i[4], theta6:theta_i[5]})
-#print(p0sub)
+print(p0sub)
 
 p1sub = p1.subs({theta1:theta_i[0], theta2:theta_i[1], theta3:theta_i[2], theta4:theta_i[3],
                  theta5:theta_i[4], theta6:theta_i[5]})
-#print(p1sub)
+print(p1sub)
+
+
 
 
 

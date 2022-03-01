@@ -33,7 +33,7 @@ theta1 = 0*(pi/180)
 theta2 = 90*(pi/180)
 theta3 = 0*(pi/180)
 theta4 = 0*(pi/180)
-theta5 = 20*(pi/180)
+theta5 = 0*(pi/180)
 theta6 = 0
 
 alpha1 = 90*(pi/180)
@@ -141,8 +141,8 @@ p6z = np.unique(p6[2])
 
 transform_0_6 = d_h_table_0_1 @ d_h_table_1_2 @ d_h_table_2_3 @ d_h_table_3_4 @ d_h_table_4_5 @ d_h_table_5_6
 
-#print("Homogeneous Matrix from frame 0 to frame 6:  ")
-#print(transform_0_6)
+print("Homogeneous Matrix from frame 0 to frame 6:  ")
+print(transform_0_6)
 
 #the final T vector contains the position of the end effector, the R matrix contains the orientation
 #of the end effector
@@ -163,7 +163,7 @@ rotationmatrix4 = transform_3_4[0:3,0:3]
 rotationmatrix5 = transform_4_5[0:3,0:3]
 rotationmatrix6 = transform_5_6[0:3,0:3]
 rotationmatrix7 = transform_0_6[0:3,0:3]
-print(rotationmatrix1)
+#print(rotationmatrix1)
 
 
 #end_effector_orientation = rotation_matrix * end_effector_position

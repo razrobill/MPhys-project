@@ -304,3 +304,14 @@ print(p1sub)
 
 
 
+
+#starting the calculations for the final three joint angles
+
+
+
+
+
+
+
+
+

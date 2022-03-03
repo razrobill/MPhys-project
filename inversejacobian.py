@@ -151,9 +151,9 @@ transform_0_6 = d_h_table_0_1 @ d_h_table_1_2 @ d_h_table_2_3 @ d_h_table_3_4 @ 
 
 transform_0_3 = d_h_table_0_1 @ d_h_table_1_2 @ d_h_table_2_3
 print(transform_0_3)
-rotation_matrix_0_6 = np.array([-1, 0, 0],
+rotation_matrix_0_6 = np.array([[0, 0, 1],
                                [0, -1, 0],
-                               [0, 0, 1])
+                               [1, 0, 0]])
 
 
 #print("Homogeneous Matrix from frame 0 to frame 6:  ")
@@ -291,11 +291,11 @@ print('\nsol=', sol)
 
 p0sub = p0.subs({theta1:theta_i[0], theta2:theta_i[1], theta3:theta_i[2], theta4:theta_i[3],
                  theta5:theta_i[4], theta6:theta_i[5]})
-print(p0sub)
+#print(p0sub)
 
 p1sub = p1.subs({theta1:theta_i[0], theta2:theta_i[1], theta3:theta_i[2], theta4:theta_i[3],
                  theta5:theta_i[4], theta6:theta_i[5]})
-print(p1sub)
+#print(p1sub)
 
 
 

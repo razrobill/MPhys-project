@@ -1,13 +1,13 @@
 import numpy as np
-
+from sympy import S, erf, log, sqrt, pi, sin, cos, tan
 
 
 
 
 #desired end effector orientation
-x = 4000
-y = 2991
-z = 100
+x = 1510
+y = 0
+z = 2290
 
 theta0 = 0
 theta1 = 0
@@ -55,11 +55,13 @@ rot_mat_0_6 = rot_mat_0_1 @ rot_mat_1_2 @ rot_mat_2_3 @ rot_mat_3_4 @ rot_mat_4_
 #can verify this is as expected
 print(rot_mat_0_6)
 
-#rot_mat_0_3 = rot_mat_0_1 @ rot_mat_1_2 @ rot_mat_2_3
 
-#print(rot_mat_0_3)
 
-new_theta2 = np.arctan2(y,x)
+
+
+#new_theta2 = np.arctan2(y,x)
+new_theta2 = 1.57
+
 
 rot_mat_0_3 = np.array([[0, np.sin(new_theta2), np.cos(new_theta2)],
                         [0, - np.cos(new_theta2), np.sin(new_theta2)],
@@ -67,6 +69,7 @@ rot_mat_0_3 = np.array([[0, np.sin(new_theta2), np.cos(new_theta2)],
 
 inv_rot_mat_0_3 = np.linalg.inv(rot_mat_0_3)
 rot_mat_3_6 = inv_rot_mat_0_3 @ rot_mat_0_6
+rot_mat_3_6 = rot_mat_3_6.round()
 print(rot_mat_3_6)
 
 #solving for theta5
@@ -88,6 +91,44 @@ print(f'theta 6 = {new_theta6} radians')
 new_theta4 = np.arccos(rot_mat_3_6[1,2]/-np.sin(new_theta5))
 print(f'theta 4 = {new_theta4} radians')
 
+#checking that the angles we calculated result in a valid rotation matrix
+r11 = np.cos(new_theta5) * np.cos(new_theta6) * np.cos(new_theta4) - np.sin(new_theta6) * np.sin(new_theta4)
+r12 = - np.cos(new_theta5) * np.sin(new_theta6) * np.cos(new_theta4) - np.cos(new_theta6) * np.sin(new_theta4)
+r13 = - np.sin(new_theta5) * np.cos(new_theta4)
+r21 = np.cos(new_theta5) * np.cos(new_theta6) * np.sin(new_theta4) + np.sin(new_theta6) * np.cos(new_theta4)
+r22 = np.cos(new_theta6) * np.cos(new_theta4) - np.cos(new_theta5) * np.sin(new_theta6) * np.sin(new_theta4)
+r23 = - np.sin(new_theta5) * np.sin(new_theta4)
+r31 = np.sin(new_theta5) * np.cos(new_theta6)
+r32 = - np.sin(new_theta5) * np.sin(new_theta6)
+r33 = np.cos(new_theta5)
+
+check_rot_mat_3_6 = np.array([[r11, r12, r13],
+                              [r21, r22, r23],
+                              [r31, r32, r33]])
+check_rot_mat_3_6 = check_rot_mat_3_6.round()
+print(check_rot_mat_3_6)
+
+#original matrix
+print(f'\nrot_mat_3_6 = {rot_mat_3_6}')
+
+#check matrix
+print(f'\ncheck_rot_mat_3_6 = {check_rot_mat_3_6}')
+
+#return if original matrix == check matrix
+rot_minus_check_3_6 = rot_mat_3_6.round() - check_rot_mat_3_6.round()
+print(rot_minus_check_3_6)
+zero_matrix = np.array([[0, 0, 0],
+                        [0, 0, 0],
+                        [0, 0, 0]])
+matrices_are_equal = np.array_equal(rot_minus_check_3_6, zero_matrix)
+
+#determine if the solution is valid or not
+#if the solution is valid, it means that the end effector can reach the target location
+if(matrices_are_equal):
+    valid_matrix = "Yes"
+else:
+    valid_matrix = "No"
+print(f'Is solution valid?\n{valid_matrix}')
 
 
 

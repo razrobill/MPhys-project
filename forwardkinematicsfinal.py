@@ -115,9 +115,9 @@ class kr360:
         p6y = np.unique(p6[1])
         p6z = np.unique(p6[2])
 
-        jointcoordinates = [p0, p1, p2, p3, p4, p5, p6]
+        #jointcoordinates = repr([p0, p1, p2, p3, p4, p5, p6])
 
-        return jointcoordinates
+        return p6
 
     #if returning multiple points doesn't work, define a list with the points and return that?
     #(have them separated by a new line or something)
@@ -139,7 +139,7 @@ if __name__ == '__main__':
     #print('end effector position: ')
     #print(endeffector)
     firstjoint = kr360.find_joint_positions(0, 90, 0, 0, 0, 0)
-    print(firstjoint)
+    print(repr(firstjoint))
 
 
 

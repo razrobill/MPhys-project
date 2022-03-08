@@ -76,7 +76,7 @@ d_h_table_1_2 = np.array([[cos(theta2), -sin(theta2)*cos(alpha2), sin(theta2)*si
 transform_1_2 = transform_0_1 @ d_h_table_1_2
 last_column2 = transform_1_2[:, 3]
 p2 = np.delete(last_column2, 3, 0)
-#print(p2)
+print(p2)
 p2x = np.unique(p2[0])
 p2y = np.unique(p2[1])
 p2z = np.unique(p2[2])

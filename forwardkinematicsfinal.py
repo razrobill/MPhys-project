@@ -122,6 +122,8 @@ class kr360:
     #if returning multiple points doesn't work, define a list with the points and return that?
     #(have them separated by a new line or something)
 
+    #try indexing the points to get them out of the array?
+
 
 
 

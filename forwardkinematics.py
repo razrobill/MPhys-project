@@ -25,7 +25,7 @@ a6 = 0
 d1 = 1045
 d2 = 0
 d3 = 0
-d4 = 720
+d4 = 1025
 d5 = 0
 d6 = 290
 
@@ -49,7 +49,7 @@ p0 = [0, 0, 0, 1]
 p0x = (p0[0])
 p0y = (p0[1])
 p0z = (p0[2])
-#print(p0)
+print(p0)
 
 
 d_h_table_0_1 = np.array([[cos(theta1), -sin(theta1)*cos(alpha1), sin(theta1)*sin(alpha1), a1*cos(theta1)],
@@ -60,7 +60,7 @@ d_h_table_0_1 = np.array([[cos(theta1), -sin(theta1)*cos(alpha1), sin(theta1)*si
 transform_0_1 = d_h_table_0_1
 last_column1 = transform_0_1[:, 3]
 p1 = np.delete(last_column1, 3, 0)
-#print(p1)
+print(p1)
 p1x = np.unique(p1[0])
 p1y = np.unique(p1[1])
 p1z = np.unique(p1[2])
@@ -91,7 +91,7 @@ d_h_table_2_3 = np.array([[cos(theta3), -sin(theta3)*cos(alpha3), sin(theta3)*si
 transform_2_3 = transform_1_2 @ d_h_table_2_3
 last_column3 = transform_2_3[:, 3]
 p3 = np.delete(last_column3, 3, 0)
-#print(p3)
+print(p3)
 p3x = np.unique(p3[0])
 p3y = np.unique(p3[1])
 p3z = np.unique(p3[2])
@@ -105,7 +105,7 @@ d_h_table_3_4 = np.array([[cos(theta4), -sin(theta4)*cos(alpha4), sin(theta4)*si
 transform_3_4 = transform_2_3 @ d_h_table_3_4
 last_column4 = transform_3_4[:, 3]
 p4 = np.delete(last_column4, 3, 0)
-#print(p4)
+print(p4)
 p4x = np.unique(p4[0])
 p4y = np.unique(p4[1])
 p4z = np.unique(p4[2])
@@ -118,7 +118,7 @@ d_h_table_4_5 = np.array([[cos(theta5), -sin(theta5)*cos(alpha5), sin(theta5)*si
 transform_4_5 = transform_3_4 @ d_h_table_4_5
 last_column5 = transform_4_5[:, 3]
 p5 = np.delete(last_column5, 3, 0)
-#print(p5)
+print(p5)
 p5x = np.unique(p5[0])
 p5y = np.unique(p5[1])
 p5z = np.unique(p5[2])
@@ -134,7 +134,7 @@ p6 = np.delete(last_column6, 3, 0)
 p6x = np.unique(p6[0])
 p6y = np.unique(p6[1])
 p6z = np.unique(p6[2])
-#print(p6)
+print(p6)
 
 #multiplying to find transformation from frame 0 to 6
 #(@ symbol used for matrix multiplication)

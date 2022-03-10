@@ -65,6 +65,93 @@ class kr360:
         #a_final = np.round(a_final, 2)
         return a_final
 
+    def valid_theta_configurations(self, joint, theta, constraint_type="angle"):
+
+        if constraint_type not in ['angle']:
+            raise Exception("enter valid constraint for joint {}".format(joint))
+        if joint not in [1, 2, 3, 4, 5, 6]:
+            raise Exception("please enter a valid joint number. Given {}".format(joint))
+
+        if joint == 1:
+            if constraint_type == "angle":
+                if abs(theta) <= 185:
+                    #valid = print('valid')
+                    return True
+                else:
+                    invalid = print('invalid theta1')
+                    return True
+
+        elif joint == 2:
+            if constraint_type == "angle":
+                if theta >= -130 and theta <= 20:
+                    #valid = print('valid')
+                    return True
+                else:
+                    invalid = print('invalid theta2')
+                    return False
+
+        elif joint == 3:
+            if constraint_type == "angle":
+                if theta >= -100 and theta <= 144:
+                    #valid = print('valid')
+                    return True
+                else:
+                    invalid = print('invalid theta3')
+                    return False
+
+        elif joint == 4:
+            if constraint_type == "angle":
+                if abs(theta) <= 350:
+                    #valid = print('valid')
+                    return True
+                else:
+                    invalid = print('invalid theta4')
+                    return False
+
+        elif joint == 5:
+            if constraint_type == "angle":
+                if abs(theta) <= 120:
+                    #valid = print('valid')
+                    return True
+                else:
+                    invalid = print('invalid theta5')
+                    return False
+
+        elif joint == 6:
+            if constraint_type == "angle":
+                if abs(theta) <= 350:
+                    #valid = print('valid')
+                    return True
+                else:
+                    invalid = print('invalid theta6')
+                    return False
+
+    def check_configuration(self, all_theta_configurations):
+
+        output_configurations = []
+
+        #for configuration in all_theta_configurations:
+        t1 = self.valid_theta_configurations(1, all_theta_configurations[0], constraint_type="angle")
+        t2 = self.valid_theta_configurations(2, all_theta_configurations[1], constraint_type="angle")
+        t3 = self.valid_theta_configurations(3, all_theta_configurations[2], constraint_type="angle")
+        t4 = self.valid_theta_configurations(4, all_theta_configurations[3], constraint_type="angle")
+        t5 = self.valid_theta_configurations(5, all_theta_configurations[4], constraint_type="angle")
+        t6 = self.valid_theta_configurations(6, all_theta_configurations[5], constraint_type="angle")
+
+        if t1 and t2 and t3 and t4 and t5 and t6:
+            print('valid configuration')
+        else:
+            print('invalid configuration')
+
+
+        return
+
+
+
+
+
+
+
 
     def find_joint_positions(self, theta1, theta2, theta3, theta4, theta5, theta6):
         a1 = dh_matrix(theta1, self.alpha1, self.a1, self.d1)
@@ -140,6 +227,10 @@ if __name__ == '__main__':
     print('end effector position: ')
     print(endeffector)
     jointcoordinates = kr360.find_joint_positions(0, 90, 0, 0, 0, 0)
+    #validity2 = kr360.valid_theta_configurations(2, 200, 'angle')
+    all_theta_configurations = [0, 90, 0, 0, 0, 0]
+    check = kr360.check_configuration(all_theta_configurations)
+    print(check)
 
     open_file = open('forward-coordinates.txt', 'w')
     sys.stdout = open_file

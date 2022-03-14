@@ -62,7 +62,6 @@ class kr360:
         a5 = dh_matrix(theta5, self.alpha5, self.a5, self.d5)
         a6 = dh_matrix(theta6, self.alpha6, self.a6, self.d6)
         a_final = a1 @ a2 @ a3 @ a4 @ a5 @ a6
-        #a_final = np.round(a_final, 2)
         return a_final
 
     def valid_theta_configurations(self, joint, theta, constraint_type="angle"):
@@ -83,7 +82,7 @@ class kr360:
 
         elif joint == 2:
             if constraint_type == "angle":
-                if theta >= -130 and theta <= 20:
+                if theta >= -40 and theta <= 110:
                     #valid = print('valid')
                     return True
                 else:
@@ -158,51 +157,79 @@ class kr360:
         a0 = np.array([0, 0, 0, 1])
         mat_0_1 = a1
         p0 = [0, 0, 0]
+        p0x = int(p0[0])
+        p0y = int(p0[1])
+        p0z = int(p0[2])
         last_column1 = mat_0_1[:, 3]
         p1 = np.delete(last_column1, 3, 0)
-        p1x = np.unique(p1[0])
-        p1y = np.unique(p1[1])
-        p1z = np.unique(p1[2])
+        p1x = int(p1[0])
+        p1y = int(p1[1])
+        p1z = int(p1[2])
 
         a2 = dh_matrix(theta2, self.alpha2, self.a2, self.d2)
         mat_1_2 = mat_0_1 @ a2
         last_column2 = mat_1_2[:, 3]
         p2 = np.delete(last_column2, 3, 0)
-        p2x = np.unique(p2[0])
-        p2y = np.unique(p2[1])
-        p2z = np.unique(p2[2])
+        p2x = int(p2[0])
+        p2y = int(p2[1])
+        p2z = int(p2[2])
 
         a3 = dh_matrix(theta3, self.alpha3, self.a3, self.d3)
         mat_2_3 = mat_1_2 @ a3
         last_column3 = mat_2_3[:, 3]
         p3 = np.delete(last_column3, 3, 0)
-        p3x = np.unique(p3[0])
-        p3y = np.unique(p3[1])
-        p3z = np.unique(p3[2])
+        p3x = int(p3[0])
+        p3y = int(p3[1])
+        p3z = int(p3[2])
 
         a4 = dh_matrix(theta4, self.alpha4, self.a4, self.d4)
         mat_3_4 = mat_2_3 @ a4
         last_column4 = mat_3_4[:, 3]
         p4 = np.delete(last_column4, 3, 0)
-        p4x = np.unique(p4[0])
-        p4y = np.unique(p4[1])
-        p4z = np.unique(p4[2])
+        p4x = int(p4[0])
+        p4y = int(p4[1])
+        p4z = int(p4[2])
 
         a5 = dh_matrix(theta5, self.alpha5, self.a5, self.d5)
         mat_4_5 = mat_3_4 @ a5
         last_column5 = mat_4_5[:, 3]
         p5 = np.delete(last_column5, 3, 0)
-        p5x = np.unique(p5[0])
-        p5y = np.unique(p5[1])
-        p5z = np.unique(p5[2])
+        p5x = int(p5[0])
+        p5y = int(p5[1])
+        p5z = int(p5[2])
 
         a6 = dh_matrix(theta6, self.alpha6, self.a6, self.d6)
         mat_5_6 = mat_4_5 @ a6
         last_column6 = mat_5_6[:, 3]
         p6 = np.delete(last_column6, 3, 0)
-        p6x = np.unique(p6[0])
-        p6y = np.unique(p6[1])
-        p6z = np.unique(p6[2])
+        #print(p6)
+        p6x = int(p6[0])
+        #print(p6x)
+        p6y = int(p6[1])
+        #print(p6y)
+        p6z = int(p6[2])
+        #print(p6z)
+
+        fig = matplotlib.pyplot.figure()
+        ax = fig.add_subplot(111, projection='3d')
+
+        ax.set_xlabel("X")
+        ax.set_ylabel("Y")
+        ax.set_zlabel("Z")
+
+        ax.set_xlim([-1500, 2000])
+        ax.set_ylim([-1500, 2000])
+        ax.set_zlim([-1500, 2000])
+
+        ax.plot3D(p0x, p0y, p0z, 'blue', marker="o")
+        ax.plot3D(p1x, p1y, p1z, 'blue', marker="o")
+        ax.plot3D(p2x, p2y, p2z, 'blue', marker="o")
+        ax.plot3D(p3x, p3y, p3z, 'blue', marker="o")
+        ax.plot3D(p4x, p4y, p4z, 'blue', marker="o")
+        ax.plot3D(p5x, p5y, p5z, 'blue', marker="o")
+        ax.plot3D(p6x, p6y, p6z, 'red', marker="^")
+
+
 
         jointcoordinates = [p0, p1, p2, p3, p4, p5, p6]
         jointp0 = jointcoordinates[0]
@@ -225,24 +252,39 @@ if __name__ == '__main__':
 
     endeffector = kr360.forward_kinematics(0, 90, 0, 0, 0, 0)
     print('end effector position: ')
-    print(endeffector)
+    #print(endeffector)
+    last_column = endeffector[:, 3]
+    end_effector_position = np.delete(last_column, 3, 0)
+    print(end_effector_position)
     jointcoordinates = kr360.find_joint_positions(0, 90, 0, 0, 0, 0)
     #validity2 = kr360.valid_theta_configurations(2, 200, 'angle')
     all_theta_configurations = [0, 90, 0, 0, 0, 0]
     check = kr360.check_configuration(all_theta_configurations)
-    print(check)
+    #print(check)
 
     open_file = open('forward-coordinates.txt', 'w')
     sys.stdout = open_file
+
+    ux = int(end_effector_position[0])
+    uy = int(end_effector_position[1])
+    uz = int(end_effector_position[2])
+    #ax.plot3D(ux, uy, uz, 'red', marker="^")
+    matplotlib.pyplot.show()
+
 
 
     for (i, item) in enumerate(jointcoordinates):
         jointcoordinates = (str(item))
         print(jointcoordinates)
 
-
-
     open_file.close()
+
+
+
+
+
+
+
 
 
 

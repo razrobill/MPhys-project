@@ -30,7 +30,7 @@ d5 = 0
 d6 = 290
 
 theta1 = 0*(pi/180)
-theta2 = 90*(pi/180)
+theta2 = 0*(pi/180)
 theta3 = 0*(pi/180)
 theta4 = 0*(pi/180)
 theta5 = 0*(pi/180)

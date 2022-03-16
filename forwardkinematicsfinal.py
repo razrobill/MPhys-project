@@ -78,11 +78,11 @@ class kr360:
                     return True
                 else:
                     invalid = print('invalid theta1')
-                    return True
+                    return False
 
         elif joint == 2:
             if constraint_type == "angle":
-                if theta >= -40 and theta <= 110:
+                if theta >= -130 and theta <= 20:
                     #valid = print('valid')
                     return True
                 else:
@@ -151,7 +151,7 @@ class kr360:
 
 
 
-
+    #it is this function that contains the plotting for now
     def find_joint_positions(self, theta1, theta2, theta3, theta4, theta5, theta6):
         a1 = dh_matrix(theta1, self.alpha1, self.a1, self.d1)
         a0 = np.array([0, 0, 0, 1])
@@ -250,19 +250,19 @@ if __name__ == '__main__':
 
     kr360 = kr360()
 
-    endeffector = kr360.forward_kinematics(0, 90, 0, 0, 0, 0)
+    endeffector = kr360.forward_kinematics(0, -90, 0, 0, 0, 0)
     print('end effector position: ')
-    #print(endeffector)
+    print(endeffector)
     last_column = endeffector[:, 3]
     end_effector_position = np.delete(last_column, 3, 0)
     print(end_effector_position)
-    jointcoordinates = kr360.find_joint_positions(0, 90, 0, 0, 0, 0)
+    jointcoordinates = kr360.find_joint_positions(0, -90, 0, 0, 0, 0)
     #validity2 = kr360.valid_theta_configurations(2, 200, 'angle')
-    all_theta_configurations = [0, 90, 0, 0, 0, 0]
+    all_theta_configurations = [0, -90, 0, 0, 0, 0]
     check = kr360.check_configuration(all_theta_configurations)
     #print(check)
 
-    open_file = open('forward-coordinates.txt', 'w')
+    open_file = open('forward-coordinates(0, -90, 0, 0, 0, 0).txt', 'w')
     sys.stdout = open_file
 
     ux = int(end_effector_position[0])

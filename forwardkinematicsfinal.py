@@ -202,7 +202,7 @@ class kr360:
         mat_5_6 = mat_4_5 @ a6
         last_column6 = mat_5_6[:, 3]
         p6 = np.delete(last_column6, 3, 0)
-        #print(p6)
+        print(p6)
         p6x = int(p6[0])
         #print(p6x)
         p6y = int(p6[1])
@@ -250,15 +250,15 @@ if __name__ == '__main__':
 
     kr360 = kr360()
 
-    endeffector = kr360.forward_kinematics(0, -90, 0, 0, 0, 0)
+    endeffector = kr360.forward_kinematics(0, 90, 0, 0, 0, 0)
     print('end effector position: ')
     print(endeffector)
     last_column = endeffector[:, 3]
     end_effector_position = np.delete(last_column, 3, 0)
     print(end_effector_position)
-    jointcoordinates = kr360.find_joint_positions(0, -90, 0, 0, 0, 0)
+    jointcoordinates = kr360.find_joint_positions(0, 90, 0, 0, 0, 0)
     #validity2 = kr360.valid_theta_configurations(2, 200, 'angle')
-    all_theta_configurations = [0, -90, 0, 0, 0, 0]
+    all_theta_configurations = [0, 90, 0, 0, 0, 0]
     check = kr360.check_configuration(all_theta_configurations)
     #print(check)
 

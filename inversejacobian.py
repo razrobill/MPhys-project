@@ -167,7 +167,7 @@ last_column = transform_0_6[:, 3]
 #print(last_column)
 
 end_effector_position = np.delete(last_column, 3, 0)
-#print(end_effector_position)
+print(end_effector_position)
 
 #extracting the 3x3 matrix representing the orientation of the end effector
 #print(rotation_matrix)

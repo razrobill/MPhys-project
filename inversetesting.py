@@ -1,5 +1,6 @@
 import numpy as np
 from sympy import S, erf, log, sqrt, pi, sin, cos, tan
+from forwardkinematicsfinal import dh_matrix, kr360
 
 
 
@@ -58,8 +59,8 @@ print(rot_mat_0_6)
 
 
 
-
-#new_theta2 = np.arctan2(y,x)
+#theta2_division = x/y
+#new_theta2 = np.arctan2(theta2_division)
 new_theta2 = 1.57
 
 
@@ -129,6 +130,12 @@ if(matrices_are_equal):
 else:
     valid_matrix = "No"
 print(f'Is solution valid?\n{valid_matrix}')
+
+
+if __name__ == '__main__':
+    pass
+    kr360 = kr360()
+    endeffector = kr360.forward_kinematics(0, 90, 0, 0, 0, 0)
 
 
 

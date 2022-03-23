@@ -9,7 +9,14 @@ from sympy import Matrix, Symbol, symbols, solveset, solve, simplify, diff, det
 from sympy import S, erf, log, sqrt, pi, sin, cos, tan
 from sympy import init_printing
 
-#kinematics simulator
+#desired end effector coordinates
+x = 1815
+y = 0
+z = 2290
+
+
+
+
 
 #d-h parameters in mm
 a1 = 500
@@ -154,6 +161,12 @@ print(transform_0_3)
 rotation_matrix_0_6 = np.array([[0, 0, 1],
                                [0, -1, 0],
                                [1, 0, 0]])
+
+theta1_division = y/x
+theta_1 = np.arctan2(y,x)
+print('theta1:')
+print(theta_1)
+
 
 
 #print("Homogeneous Matrix from frame 0 to frame 6:  ")

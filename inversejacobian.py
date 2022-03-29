@@ -70,7 +70,8 @@ transform_0_1 = d_h_table_0_1
 last_column1 = transform_0_1[:, 3]
 deletion1 = np.delete(last_column1, 3, 0)
 p1 = Matrix(deletion1)
-#print(p1)
+print('p1 equals: ')
+print(p1)
 p1x = np.unique(p1[0])
 p1y = np.unique(p1[1])
 p1z = np.unique(p1[2])
@@ -194,39 +195,7 @@ rotationmatrix = transform_0_6[0:3,0:3]
 #end_effector_orientation = rotation_matrix * end_effector_position
 #print(end_effector_orientation)
 
-#creating axis
-fig = matplotlib.pyplot.figure()
-ax = fig.add_subplot(111, projection='3d')
 
-#add axis labels
-ax.set_xlabel("X")
-ax.set_ylabel("Y")
-ax.set_zlabel("Z")
-
-#add axis limits
-ax.set_xlim([-200, 2000])
-ax.set_ylim([-200, 2000])
-ax.set_zlim([-200, 2000])
-
-
-
-ux = np.unique(end_effector_position[0])
-uy = np.unique(end_effector_position[1])
-uz = np.unique(end_effector_position[2])
-
-
-# adding the final end effector position to the plot
-# ax.plot3D(ux, uy, uz, 'red', marker="^")
-# ax.plot3D(p0x, p0y, p0z, 'blue', marker="o")
-# ax.plot3D(p1x, p1y, p1z, 'blue', marker="o")
-# ax.plot3D(p2x, p2y, p2z, 'blue', marker="o")
-# ax.plot3D(p3x, p3y, p3z, 'blue', marker="o")
-# ax.plot3D(p4x, p4y, p4z, 'blue', marker="o")
-# ax.plot3D(p5x, p5y, p5z, 'blue', marker="o")
-# ax.plot3D(p6x, p6y, p6z, 'blue', marker="o")
-
-#showing plot
-matplotlib.pyplot.show()
 
 init_printing()
 

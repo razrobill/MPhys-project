@@ -17,11 +17,11 @@ def dh_matrix(theta, alpha, a, d):
     theta_ = math.radians(theta)
     alpha_ = math.radians(alpha)
 
-    dhmatrix = np.array([[round(sp.cos(theta_)), round(-1 * sp.sin(theta_)) * round(sp.cos(alpha_)), round(sp.sin(theta_)) * round(sp.sin(alpha_)),
-                       a * round(sp.cos(theta_))],
-                      [round(sp.sin(theta_)), round(sp.cos(theta_)) * round(sp.cos(alpha_)), round(-1 * sp.cos(theta_)) * round(sp.sin(alpha_)),
-                       a * round(sp.sin(theta_))],
-                      [0, round(sp.sin(alpha_)), round(sp.cos(alpha_)), d],
+    dhmatrix = np.array([[(sp.cos(theta_)), (-1 * sp.sin(theta_)) * (sp.cos(alpha_)), (sp.sin(theta_)) * (sp.sin(alpha_)),
+                       a * (sp.cos(theta_))],
+                      [(sp.sin(theta_)), (sp.cos(theta_)) * (sp.cos(alpha_)), (-1 * sp.cos(theta_)) * (sp.sin(alpha_)),
+                       a * (sp.sin(theta_))],
+                      [0, (sp.sin(alpha_)), (sp.cos(alpha_)), d],
                       [0, 0, 0, 1]])
     return dhmatrix
 
@@ -250,7 +250,7 @@ if __name__ == '__main__':
 
     kr360 = kr360()
 
-    endeffector = kr360.forward_kinematics(0, 90, 0, 0, 0, 0)
+    endeffector = kr360.forward_kinematics(0, 90.033, 1, 0, 0.212, 0)
     print('end effector position: ')
     print(endeffector)
     last_column = endeffector[:, 3]

@@ -9,15 +9,6 @@ from sympy import Matrix, Symbol, symbols, solveset, solve, simplify, diff, det
 from sympy import S, erf, log, sqrt, pi, sin, cos, tan
 from sympy import init_printing
 
-#desired end effector coordinates
-x = 1815
-y = 0
-z = 2290
-
-
-
-
-
 #d-h parameters in mm
 a1 = 500
 a2 = 1300
@@ -29,16 +20,9 @@ a6 = 0
 d1 = 1045
 d2 = 0
 d3 = 0
-d4 = 720
+d4 = 1025
 d5 = 0
 d6 = 290
-
-#theta1 = 0*(pi/180)
-#theta2 = 90*(pi/180)
-#theta3 = 0*(pi/180)
-#theta4 = 0*(pi/180)
-#theta5 = 20*(pi/180)
-#theta6 = 0
 
 #defining variables to be used as symbols
 theta1, theta2, theta3, theta4, theta5, theta6 = symbols('theta_1 theta_2 theta_3 theta_4 theta_5 theta_6')
@@ -87,8 +71,8 @@ d_h_table_1_2 = np.array([[cos(theta2), -sin(theta2)*cos(alpha2), sin(theta2)*si
 transform_1_2 = transform_0_1 @ d_h_table_1_2
 last_column2 = transform_1_2[:, 3]
 deletionp2 = np.delete(last_column2, 3, 0)
-#print(p2)
 p2 = Matrix(deletionp2)
+print(p2)
 p2x = np.unique(p2[0])
 p2y = np.unique(p2[1])
 p2z = np.unique(p2[2])
@@ -150,7 +134,7 @@ p6 = Matrix(p6)
 p6x = np.unique(p6[0])
 p6y = np.unique(p6[1])
 p6z = np.unique(p6[2])
-#print(p6)
+
 
 #multiplying to find transformation from frame 0 to 6
 #(@ symbol used for matrix multiplication)
@@ -163,10 +147,10 @@ rotation_matrix_0_6 = np.array([[0, 0, 1],
                                [0, -1, 0],
                                [1, 0, 0]])
 
-theta1_division = y/x
-theta_1 = np.arctan2(y,x)
-print('theta1:')
-print(theta_1)
+#theta1_division = y/x
+#theta_1 = np.arctan2(y,x)
+#print('theta1:')
+#print(theta_1)
 
 
 
@@ -181,7 +165,7 @@ last_column = transform_0_6[:, 3]
 #print(last_column)
 
 end_effector_position = np.delete(last_column, 3, 0)
-print(end_effector_position)
+#print(end_effector_position)
 
 #extracting the 3x3 matrix representing the orientation of the end effector
 #print(rotation_matrix)
@@ -190,104 +174,115 @@ rotationmatrix = transform_0_6[0:3,0:3]
 
 
 
-
-
-#end_effector_orientation = rotation_matrix * end_effector_position
-#print(end_effector_orientation)
-
-
-
 init_printing()
 
-#print('T1=', transform_0_1, '\n\nT2=', transform_1_2, '\n\nT3=', transform_2_3, '\n\nT4=', transform_3_4, '\n\nT5=', transform_4_5, '\n\nT6=', transform_5_6)
-#print('p1=', p1, '\n\np2=', p2, '\n\np3=', p3, '\n\np4=', p4, '\n\np5=', p5, '\n\np6=', p6)
+print('T1=',transform_0_1,'\n\nT2=',transform_1_2,'\n\nT3=',transform_2_3,'\n\nT4=',transform_3_4,'\n\nT5=',transform_4_5,'\n\nT6=',transform_5_6)
+print('p1=',p1,'\n\np2=',p2,'\n\np3=',p3,'\n\np4=',p4,'\n\np5=',p5,'\n\np6=',p6)
 
 #coordinates of arm tip
-p_i = Matrix([p6[0], p6[1], p6[2]])
-#print(p_i)
+p = Matrix([p6[0], p6[1], p6[2]])
 
-#defining elements of Jacobian
-#differentiating px with respect to thetas
-j11 = diff(p_i[0], theta1)
-j12 = diff(p_i[0], theta2)
-j13 = diff(p_i[0], theta3)
-j14 = diff(p_i[0], theta4)
-j15 = diff(p_i[0], theta5)
-j16 = diff(p_i[0], theta6)
+j11 = diff(p[0], theta1) # differentiate px with theta_1
+j12 = diff(p[0], theta2) # differentiate px with theta_2
+j13 = diff(p[0], theta3) # differentiate px with theta_3
+j14 = diff(p[0], theta4) # differentiate px with theta_4
+j15 = diff(p[0], theta5) # differentiate px with theta_5
+j16 = diff(p[0], theta6) # differentiate px with theta_6
 
-#differentiating py with respect to thetas
-j21 = diff(p_i[1], theta1)
-j22 = diff(p_i[1], theta2)
-j23 = diff(p_i[1], theta3)
-j24 = diff(p_i[1], theta4)
-j25 = diff(p_i[1], theta5)
-j26 = diff(p_i[1], theta6)
+j21 = diff(p[1], theta1) # differentiate py with theta_1
+j22 = diff(p[1], theta2) # differentiate py with theta_2
+j23 = diff(p[1], theta3) # differentiate py with theta_3
+j24 = diff(p[1], theta4) # differentiate py with theta_4
+j25 = diff(p[1], theta5) # differentiate py with theta_5
+j26 = diff(p[1], theta6) # differentiate py with theta_6
 
-#differentiating pz with respect to thetas
-j31 = diff(p_i[2], theta1)
-j32 = diff(p_i[2], theta2)
-j33 = diff(p_i[2], theta3)
-j34 = diff(p_i[2], theta4)
-j35 = diff(p_i[2], theta5)
-j36 = diff(p_i[2], theta6)
+j31 = diff(p[2], theta1) # differentiate pz with theta_1
+j32 = diff(p[2], theta2) # differentiate pz with theta_2
+j33 = diff(p[2], theta3) # differentiate pz with theta_3
+j34 = diff(p[2], theta4) # differentiate pz with theta_4
+j35 = diff(p[2], theta5) # differentiate pz with theta_5
+j36 = diff(p[2], theta6) # differentiate pz with theta_6
 
-#assembling elements of matrix
-J = Matrix([[j11, j12, j13, j14, j15, j16], [j21, j22, j23, j24, j25, j26], [j31, j32, j33, j34, j35, j36]])
+J = Matrix([[j11, j12, j13, j14, j15, j16], [j21, j22, j23, j24, j25, j26], [j31, j32, j33, j34, j35, j36]]) # assemble into matrix form
+
 print(J.shape)
-#print(J)
 
-#defining for small movements
-dtheta1, dtheta2, dtheta3, dtheta4, dtheta5, dtheta6 = symbols('dtheta_1 dtheta_2 dtheta_3 dtheta_4 dtheta_5 dtheta_6')
-dtheta = Matrix([dtheta1, dtheta2, dtheta3, dtheta4, dtheta5, dtheta6])
-dp = Matrix([0, 100, 0])
-p_f = p_i + dp
+#initial theta values, perhaps set these as for forward kinematics
+theta_i = Matrix([0,pi/2,0,0,0,0])
 
-#initial position - this is the set up position shown in the workspace diagram
-theta_i = Matrix([0, 90*(pi/180),0,0,0,0])
+p_i = p.subs({theta1:theta_i[0], theta2:theta_i[1], theta3:theta_i[2], theta4:theta_i[3], theta5:theta_i[4], theta6:theta_i[5]}).evalf()
 
-#loop to iterate through a number of points from start position pi to end position pf
-#after each iteration end position pf and end joint angles thetaf will become inital
-#start position pi and starting guess for joint angles thetai
+#p_i is the initial position of the end effector (same as p6)
+print(p_i)
 
+#final (target) point of the end effector, defined as a relative movement from the initial position, for example moving
+#the arm down in the z-axis by 5cm
+p_f = p_i + Matrix([0, 0, 30])
 
-#calculating numerical value of J at each point
-Jsub = J.subs({theta1:theta_i[0], theta2:theta_i[1], theta3:theta_i[2],
-               theta4:theta_i[3], theta5:theta_i[4], theta6:theta_i[5]})
+dp = p_f - p_i
 
-#to evaluate the overall value for each element of the expression
-Jeval = Jsub.evalf()
-print('\n\n\nJeval=', Jeval)
+dp_threshold = 5
+dp_step = 1
+theta_max_step = 500
+j = 0
+max_steps = 500
 
-#solving for values of theta
-#print(solve(Jeval*dtheta-dp,(dtheta1, dtheta2, dtheta3, dtheta4, dtheta5, dtheta6)))
+while dp.norm() > dp_threshold and j < max_steps:
+    print(f'step{j}: θ[{theta_i}, P[{p_i}]')
+    #reduce the dp 3-element dp vector by some scaling factor
+    #dp represents the distance between where the end effector is now and our goal position
+    v_p = dp * dp_step / dp.norm()
+    J = p.jacobian(theta)
+    J_i = J.subs({theta1: theta_i[0], theta2: theta_i[1], theta3: theta_i[2], theta4: theta_i[3], theta5: theta_i[4],
+                  theta6: theta_i[5]}).evalf()
+    J_inv = J_i.pinv()
+    dtheta = J_inv * v_p
+    theta_i = theta_i + np.clip(dtheta, -1 * theta_max_step, theta_max_step)
+    p_i = p.subs({theta1: theta_i[0], theta2: theta_i[1], theta3: theta_i[2], theta4: theta_i[3], theta5: theta_i[4],
+                  theta6: theta_i[5]}).evalf()
+    dp = p_f - p_i
+    j = j + 1
 
-#to solve and find values of theta that work for reaching the new point
-sol = solve(Jeval * dtheta - dp , dtheta)
-theta_f = theta_i + dtheta
-print('\nsol=', sol)
-#print(dtheta) #i think perhps this isn't working because i've not explicitly said dtheta1, dtheta2 etc like I did previously
+    p0sub = p0.subs({theta1: theta_i[0], theta2: theta_i[1], theta3: theta_i[2], theta4: theta_i[3], theta5: theta_i[4],
+                     theta6: theta_i[5]}).evalf()
+    p1sub = p1.subs({theta1: theta_i[0], theta2: theta_i[1], theta3: theta_i[2], theta4: theta_i[3], theta5: theta_i[4],
+                     theta6: theta_i[5]}).evalf()
+    p2sub = p2.subs({theta1: theta_i[0], theta2: theta_i[1], theta3: theta_i[2], theta4: theta_i[3], theta5: theta_i[4],
+                     theta6: theta_i[5]}).evalf()
+    p3sub = p3.subs({theta1: theta_i[0], theta2: theta_i[1], theta3: theta_i[2], theta4: theta_i[3], theta5: theta_i[4],
+                     theta6: theta_i[5]}).evalf()
+    p4sub = p4.subs({theta1: theta_i[0], theta2: theta_i[1], theta3: theta_i[2], theta4: theta_i[3], theta5: theta_i[4],
+                     theta6: theta_i[5]}).evalf()
+    p5sub = p5.subs({theta1: theta_i[0], theta2: theta_i[1], theta3: theta_i[2], theta4: theta_i[3], theta5: theta_i[4],
+                     theta6: theta_i[5]}).evalf()
+    p6sub = p6.subs({theta1: theta_i[0], theta2: theta_i[1], theta3: theta_i[2], theta4: theta_i[3], theta5: theta_i[4],
+                     theta6: theta_i[5]}).evalf()
+    soa = np.array([p0sub, p1sub, p2sub, p3sub, p4sub, p5sub, p6sub], dtype=object)
+    X, Y, Z, = zip(*soa)
+    X = np.array(X)
+    Y = np.array(Y)
+    Z = np.array(Z)
+    X = np.ndarray.flatten(X)
+    Y = np.ndarray.flatten(Y)
+    Z = np.ndarray.flatten(Z)
+    fig = matplotlib.pyplot.figure(1)
+    ax = fig.add_subplot(111, projection='3d')
+    ax.set_xlabel("X")
+    ax.set_ylabel("Y")
+    ax.set_zlabel("Z")
+    ax.set_xlim([-2000, 2000])
+    ax.set_ylim([-2000, 2000])
+    ax.set_zlim([0, 3000])
+    # ax.view_init(elev=45, azim=45)
+    ax.view_init(elev=10, azim=90)
+    ax.plot3D(X, Y, Z, 'blue', marker="o")
+    matplotlib.pyplot.draw()
+    matplotlib.pyplot.show()
+    matplotlib.pyplot.pause(0.1)
 
+    # print("step “,step,”:\n θ[", theta_i, "]\n p[", p_i, "]")
 
-#initial theta values that give the initial configuration
-#print('theta_i=', theta_i)
-
-p0sub = p0.subs({theta1:theta_i[0], theta2:theta_i[1], theta3:theta_i[2], theta4:theta_i[3],
-                 theta5:theta_i[4], theta6:theta_i[5]})
-#print(p0sub)
-
-p1sub = p1.subs({theta1:theta_i[0], theta2:theta_i[1], theta3:theta_i[2], theta4:theta_i[3],
-                 theta5:theta_i[4], theta6:theta_i[5]})
-#print(p1sub)
-
-
-
-
-
-
-
-
-
-#starting the calculations for the final three joint angles
+print('\n\nFinal Joint Angles in Radians:\n', theta_i.evalf())
 
 
 

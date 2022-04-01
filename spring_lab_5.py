@@ -113,7 +113,7 @@ dp = p_f - p_i
 
 dp_threshold = 0.001
 dp_step = 0.0005
-theta_max_step = 0.2
+theta_max_step = 0.5
 j = 0
 max_steps = 500
 while dp.norm() > dp_threshold and j < max_steps:
@@ -132,43 +132,55 @@ while dp.norm() > dp_threshold and j < max_steps:
     dp = p_f - p_i
     j = j + 1
 
+    p0sub = p0.subs({theta1: theta_i[0], theta2: theta_i[1], theta3: theta_i[2], theta4: theta_i[3], theta5: theta_i[4],
+                     theta6: theta_i[5]}).evalf()
+    p1sub = p1.subs({theta1: theta_i[0], theta2: theta_i[1], theta3: theta_i[2], theta4: theta_i[3], theta5: theta_i[4],
+                     theta6: theta_i[5]}).evalf()
+    p2sub = p2.subs({theta1: theta_i[0], theta2: theta_i[1], theta3: theta_i[2], theta4: theta_i[3], theta5: theta_i[4],
+                     theta6: theta_i[5]}).evalf()
+    p3sub = p3.subs({theta1: theta_i[0], theta2: theta_i[1], theta3: theta_i[2], theta4: theta_i[3], theta5: theta_i[4],
+                     theta6: theta_i[5]}).evalf()
+    p4sub = p4.subs({theta1: theta_i[0], theta2: theta_i[1], theta3: theta_i[2], theta4: theta_i[3], theta5: theta_i[4],
+                     theta6: theta_i[5]}).evalf()
+    p5sub = p5.subs({theta1: theta_i[0], theta2: theta_i[1], theta3: theta_i[2], theta4: theta_i[3], theta5: theta_i[4],
+                     theta6: theta_i[5]}).evalf()
+    p6sub = p6.subs({theta1: theta_i[0], theta2: theta_i[1], theta3: theta_i[2], theta4: theta_i[3], theta5: theta_i[4],
+                     theta6: theta_i[5]}).evalf()
+    soa = np.array([p0sub, p1sub, p2sub, p3sub, p4sub, p5sub, p6sub])
+    X, Y, Z, W = zip(*soa)
+    X = np.array(X)
+    Y = np.array(Y)
+    Z = np.array(Z)
+    W = np.array(W)
+    X = np.ndarray.flatten(X)
+    Y = np.ndarray.flatten(Y)
+    Z = np.ndarray.flatten(Z)
+    W = np.ndarray.flatten(W)
+    fig = matplotlib.pyplot.figure(1)
+    ax = fig.add_subplot(111, projection='3d')
+    ax.set_xlabel("X")
+    ax.set_ylabel("Y")
+    ax.set_zlabel("Z")
+    ax.set_xlim([-1, 1])
+    ax.set_ylim([-1, 1])
+    ax.set_zlim([0, 1])
+    # ax.view_init(elev=45, azim=45)
+    ax.view_init(elev=10, azim=90)
+    ax.plot3D(X, Y, Z, 'blue', marker="o")
+    matplotlib.pyplot.draw()
+    matplotlib.pyplot.show()
+    matplotlib.pyplot.pause(0.1)
+
     #print("step “,step,”:\n θ[", theta_i, "]\n p[", p_i, "]")
 
+print('\n\nFinal Joint Angles in Radians:\n', theta_i.evalf())
 
 
 
 
 
-pp0sub = p0.subs({theta1:theta_i[0], theta2:theta_i[1], theta3:theta_i[2], theta4:theta_i[3], theta5:theta_i[4], theta6:theta_i[5]}).evalf()
-p1sub = p1.subs({theta1:theta_i[0], theta2:theta_i[1], theta3:theta_i[2], theta4:theta_i[3], theta5:theta_i[4], theta6:theta_i[5]}).evalf()
-p2sub = p2.subs({theta1:theta_i[0], theta2:theta_i[1], theta3:theta_i[2], theta4:theta_i[3], theta5:theta_i[4], theta6:theta_i[5]}).evalf()
-p3sub = p3.subs({theta1:theta_i[0], theta2:theta_i[1], theta3:theta_i[2], theta4:theta_i[3], theta5:theta_i[4], theta6:theta_i[5]}).evalf()
-p4sub = p4.subs({theta1:theta_i[0], theta2:theta_i[1], theta3:theta_i[2], theta4:theta_i[3], theta5:theta_i[4], theta6:theta_i[5]}).evalf()
-p5sub = p5.subs({theta1:theta_i[0], theta2:theta_i[1], theta3:theta_i[2], theta4:theta_i[3], theta5:theta_i[4], theta6:theta_i[5]}).evalf()
-p6sub = p6.subs({theta1:theta_i[0], theta2:theta_i[1], theta3:theta_i[2], theta4:theta_i[3], theta5:theta_i[4], theta6:theta_i[5]}).evalf()
-soa = numpy.array([p0sub,p1sub,p2sub,p3sub,p4sub,p5sub,p6sub])
-X, Y, Z, W = zip(*soa)
-X = numpy.array(X)
-Y = numpy.array(Y)
-Z = numpy.array(Z)
-W = numpy.array(W)
-X = numpy.ndarray.flatten(X)
-Y = numpy.ndarray.flatten(Y)
-Z = numpy.ndarray.flatten(Z)
-W = numpy.ndarray.flatten(W)
-fig = matplotlib.pyplot.figure(1)
-ax = fig.add_subplot(111, projection='3d')
-ax.set_xlabel("X")
-ax.set_ylabel("Y")
-ax.set_zlabel("Z")
-ax.set_xlim([-1, 1])
-ax.set_ylim([-1, 1])
-ax.set_zlim([0, 1])
-ax.view_init(elev=45, azim=45)
-ax.plot3D(X,Y,Z, 'blue', marker="o")
-matplotlib.pyplot.draw()
-matplotlib.pyplot.show()
-matplotlib.pyplot.pause(0.1)
+
+
 
 
 

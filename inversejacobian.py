@@ -141,39 +141,6 @@ p6z = np.unique(p6[2])
 
 transform_0_6 = d_h_table_0_1 @ d_h_table_1_2 @ d_h_table_2_3 @ d_h_table_3_4 @ d_h_table_4_5 @ d_h_table_5_6
 
-transform_0_3 = d_h_table_0_1 @ d_h_table_1_2 @ d_h_table_2_3
-print(transform_0_3)
-rotation_matrix_0_6 = np.array([[0, 0, 1],
-                               [0, -1, 0],
-                               [1, 0, 0]])
-
-#theta1_division = y/x
-#theta_1 = np.arctan2(y,x)
-#print('theta1:')
-#print(theta_1)
-
-
-
-#print("Homogeneous Matrix from frame 0 to frame 6:  ")
-#print(transform_0_6)
-
-#the final T vector contains the position of the end effector, the R matrix contains the orientation
-#of the end effector
-
-#trying to print out t, I need to get rid of the fourth value
-last_column = transform_0_6[:, 3]
-#print(last_column)
-
-end_effector_position = np.delete(last_column, 3, 0)
-#print(end_effector_position)
-
-#extracting the 3x3 matrix representing the orientation of the end effector
-#print(rotation_matrix)
-rotationmatrix = transform_0_6[0:3,0:3]
-#print(rotationmatrix)
-
-
-
 init_printing()
 
 print('T1=',transform_0_1,'\n\nT2=',transform_1_2,'\n\nT3=',transform_2_3,'\n\nT4=',transform_3_4,'\n\nT5=',transform_4_5,'\n\nT6=',transform_5_6)
@@ -217,13 +184,13 @@ print(p_i)
 
 #final (target) point of the end effector, defined as a relative movement from the initial position, for example moving
 #the arm down in the z-axis by 5cm
-p_f = p_i + Matrix([0, 0, 30])
+p_f = p_i + Matrix([0, 0, 500])
 
 dp = p_f - p_i
 
 dp_threshold = 5
 dp_step = 1
-theta_max_step = 500
+theta_max_step = 0.5
 j = 0
 max_steps = 500
 
@@ -271,7 +238,7 @@ while dp.norm() > dp_threshold and j < max_steps:
     ax.set_ylabel("Y")
     ax.set_zlabel("Z")
     ax.set_xlim([-2000, 2000])
-    ax.set_ylim([-2000, 2000])
+    ax.set_ylim([0, 2000])
     ax.set_zlim([0, 3000])
     # ax.view_init(elev=45, azim=45)
     ax.view_init(elev=10, azim=90)
@@ -280,7 +247,6 @@ while dp.norm() > dp_threshold and j < max_steps:
     matplotlib.pyplot.show()
     matplotlib.pyplot.pause(0.1)
 
-    # print("step “,step,”:\n θ[", theta_i, "]\n p[", p_i, "]")
 
 print('\n\nFinal Joint Angles in Radians:\n', theta_i.evalf())
 

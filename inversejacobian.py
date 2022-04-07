@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy
+import math
 import matplotlib.pyplot
 import numpy as np
 import scipy
@@ -184,7 +185,7 @@ print(p_i)
 
 #final (target) point of the end effector, defined as a relative movement from the initial position, for example moving
 #the arm down in the z-axis by 5cm
-p_f = p_i + Matrix([0, 0, 500])
+p_f = p_i + Matrix([0, 0, 25])
 
 dp = p_f - p_i
 
@@ -249,12 +250,61 @@ while dp.norm() > dp_threshold and j < max_steps:
 
 
 print('\n\nFinal Joint Angles in Radians:\n', theta_i.evalf())
+theta__2 = int(theta_i.evalf()[1])
+rot_mat_0_3 = np.array([[0, np.sin(theta__2), np.cos(theta__2)],
+                        [0, - np.cos(theta__2), np.sin(theta__2)],
+                        [1, 0, 0]])
+print('rotmat_0_3: ', rot_mat_0_3)
+inv_rot_mat_0_3 = np.linalg.inv(rot_mat_0_3)
 
+theta__0 = 0
+theta__1 = int(theta_i.evalf()[0])
+theta__3 = (theta_i.evalf()[2])
+print('theta__3: ', theta__3)
+theta__4 = int(theta_i.evalf()[3])
+theta__5 = int(theta_i.evalf()[4])
+theta__6 = int(theta_i.evalf()[5])
 
+rot_mat_0_1 = np.array([[np.cos(theta__0), 0, np.sin(theta__0)],
+                       [np.sin(theta__0), 0, - np.cos(theta__0)],
+                       [0, 1, 0]])
 
+rot_mat_1_2 = np.array([[- np.sin(theta__1), np.cos(theta__1), 0],
+                       [np.cos(theta__1), np.sin(theta__1), 0],
+                       [0, 0, 1]])
 
+rot_mat_2_3 = np.array([[np.cos(theta__2), 0, - np.sin(theta__2)],
+                       [np.sin(theta__2), 0, np.cos(theta__2)],
+                       [0, 1, 0]])
 
+rot_mat_3_4 = np.array([[math.cos(theta__3), 0, - math.sin(theta__3)],
+                       [math.sin(theta__3), 0, math.cos(theta__3)],
+                       [0, 1, 0]])
 
+rot_mat_4_5 = np.array([[np.cos(theta__4), 0,  - np.sin(theta__4)],
+                        [np.sin(theta__4), 0, np.cos(theta__4)],
+                        [0, 1, 0]])
+
+rot_mat_5_6 = np.array([[np.cos(theta__5), - np.sin(theta__5), 0],
+                       [np.sin(theta__5), np.cos(theta__5), 0],
+                       [0, 0, 1]])
+
+rot_mat_0_6 = rot_mat_0_1 @ rot_mat_1_2 @ rot_mat_2_3 @ rot_mat_3_4 @ rot_mat_4_5 @ rot_mat_5_6
+
+print(rot_mat_0_6)
+
+rot_mat_3_6 = inv_rot_mat_0_3 @ rot_mat_0_6
+rot_mat_3_6 = rot_mat_3_6.round()
+print(rot_mat_3_6)
+
+new_theta5 = np.arccos(rot_mat_3_6[2,2])
+print(f'theta 5 = {new_theta5} radians')
+
+new_theta6 = np.arccos(rot_mat_3_6[2,0]/np.sin(new_theta5))
+print(f'theta 6 = {new_theta6} radians')
+
+new_theta4 = np.arccos(rot_mat_3_6[1,2]/-np.sin(new_theta5))
+print(f'theta 4 = {new_theta4} radians')
 
 
 

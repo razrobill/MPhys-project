@@ -249,18 +249,18 @@ while dp.norm() > dp_threshold and j < max_steps:
     matplotlib.pyplot.pause(0.1)
 
 
-print('\n\nFinal Joint Angles in Radians:\n', theta_i.evalf())
+
 theta__2 = int(theta_i.evalf()[1])
 rot_mat_0_3 = np.array([[0, np.sin(theta__2), np.cos(theta__2)],
                         [0, - np.cos(theta__2), np.sin(theta__2)],
                         [1, 0, 0]])
-print('rotmat_0_3: ', rot_mat_0_3)
+#print('rotmat_0_3: ', rot_mat_0_3)
 inv_rot_mat_0_3 = np.linalg.inv(rot_mat_0_3)
 
 theta__0 = 0
 theta__1 = int(theta_i.evalf()[0])
 theta__3 = (theta_i.evalf()[2])
-print('theta__3: ', theta__3)
+#print('theta__3: ', theta__3)
 theta__4 = int(theta_i.evalf()[3])
 theta__5 = int(theta_i.evalf()[4])
 theta__6 = int(theta_i.evalf()[5])
@@ -291,20 +291,37 @@ rot_mat_5_6 = np.array([[np.cos(theta__5), - np.sin(theta__5), 0],
 
 rot_mat_0_6 = rot_mat_0_1 @ rot_mat_1_2 @ rot_mat_2_3 @ rot_mat_3_4 @ rot_mat_4_5 @ rot_mat_5_6
 
-print(rot_mat_0_6)
+#print(rot_mat_0_6)
 
 rot_mat_3_6 = inv_rot_mat_0_3 @ rot_mat_0_6
 rot_mat_3_6 = rot_mat_3_6.round()
-print(rot_mat_3_6)
+#print(rot_mat_3_6)
 
 new_theta5 = np.arccos(rot_mat_3_6[2,2])
-print(f'theta 5 = {new_theta5} radians')
+#print(f'theta 5 = {new_theta5} radians')
 
 new_theta6 = np.arccos(rot_mat_3_6[2,0]/np.sin(new_theta5))
-print(f'theta 6 = {new_theta6} radians')
+#print(f'theta 6 = {new_theta6} radians')
 
 new_theta4 = np.arccos(rot_mat_3_6[1,2]/-np.sin(new_theta5))
-print(f'theta 4 = {new_theta4} radians')
+#print(f'theta 4 = {new_theta4} radians')
+
+first_three_angles = (theta_i.evalf()[:3])
+
+first_angle = (theta_i.evalf()[0])
+second_angle = (theta_i.evalf()[1])
+third_angle = (theta_i.evalf()[2])
+
+fourth_angle = new_theta4
+fifth_angle = new_theta5
+sixth_angle = new_theta6
+
+print(first_angle)
+print(second_angle)
+print(third_angle)
+print(fourth_angle)
+print(fifth_angle)
+print(sixth_angle)
 
 
-
+#print('\n\nFinal Joint Angles in Radians:\n', (final_solution))

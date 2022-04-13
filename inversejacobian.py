@@ -324,4 +324,4 @@ print(fifth_angle)
 print(sixth_angle)
 
 
-#print('\n\nFinal Joint Angles in Radians:\n', (final_solution))
+print('\n\nFinal Joint Angles in Radians:\n', theta_i.evalf())

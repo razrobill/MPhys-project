@@ -148,6 +148,7 @@ print('T1=',transform_0_1,'\n\nT2=',transform_1_2,'\n\nT3=',transform_2_3,'\n\nT
 print('p1=',p1,'\n\np2=',p2,'\n\np3=',p3,'\n\np4=',p4,'\n\np5=',p5,'\n\np6=',p6)
 
 #coordinates of arm tip
+#
 p = Matrix([p6[0], p6[1], p6[2]])
 
 j11 = diff(p[0], theta1) # differentiate px with theta_1
@@ -174,6 +175,7 @@ j36 = diff(p[2], theta6) # differentiate pz with theta_6
 J = Matrix([[j11, j12, j13, j14, j15, j16], [j21, j22, j23, j24, j25, j26], [j31, j32, j33, j34, j35, j36]]) # assemble into matrix form
 
 print(J.shape)
+print(J)
 
 #initial theta values, perhaps set these as for forward kinematics
 theta_i = Matrix([0,pi/2,0,0,0,0])

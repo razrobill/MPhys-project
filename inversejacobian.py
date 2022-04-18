@@ -187,7 +187,7 @@ print(p_i)
 
 #final (target) point of the end effector, defined as a relative movement from the initial position, for example moving
 #the arm down in the z-axis by 5cm
-p_f = p_i + Matrix([0, 0, 25])
+p_f = p_i + Matrix([0, 0, 0])
 
 dp = p_f - p_i
 
@@ -195,7 +195,7 @@ dp_threshold = 5
 dp_step = 1
 theta_max_step = 0.5
 j = 0
-max_steps = 500
+max_steps = 50
 
 while dp.norm() > dp_threshold and j < max_steps:
     print(f'step{j}: θ[{theta_i}, P[{p_i}]')

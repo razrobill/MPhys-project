@@ -217,9 +217,9 @@ class kr360:
         ax.set_ylabel("Y")
         ax.set_zlabel("Z")
 
-        ax.set_xlim([-1500, 2000])
+        ax.set_xlim([-2000, 2000])
         ax.set_ylim([-1500, 2000])
-        ax.set_zlim([-1500, 2000])
+        ax.set_zlim([-1500, 2500])
 
         ax.plot3D(p0x, p0y, p0z, 'blue', marker="o")
         ax.plot3D(p1x, p1y, p1z, 'blue', marker="o")
@@ -250,19 +250,19 @@ if __name__ == '__main__':
 
     kr360 = kr360()
 
-    endeffector = kr360.forward_kinematics(0, -40, 0, 0, 0, 0)
+    endeffector = kr360.forward_kinematics(0, 90, 1, 0, 0, 0)
     print('end effector position: ')
     print(endeffector)
     last_column = endeffector[:, 3]
     end_effector_position = np.delete(last_column, 3, 0)
     print(end_effector_position)
-    jointcoordinates = kr360.find_joint_positions(0, -40, 0, 0, 0, 0)
+    jointcoordinates = kr360.find_joint_positions(0, 90, 1, 0, 0, 0)
     #validity2 = kr360.valid_theta_configurations(2, 200, 'angle')
-    all_theta_configurations = [0, -40, 0, 0, 0, 0]
+    all_theta_configurations = [0, 90, 1, 0, 0, 0]
     check = kr360.check_configuration(all_theta_configurations)
     #print(check)
 
-    open_file = open('forward-coordinates(0, -40, 0, 0, 0, 0).txt', 'w')
+    open_file = open('forward-coordinates(maximum reach).txt', 'w')
     sys.stdout = open_file
 
     ux = int(end_effector_position[0])

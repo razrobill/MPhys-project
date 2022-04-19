@@ -187,7 +187,7 @@ print(p_i)
 
 #final (target) point of the end effector, defined as a relative movement from the initial position, for example moving
 #the arm down in the z-axis by 5cm
-p_f = p_i + Matrix([0, 0, 0])
+p_f = p_i + Matrix([0, 0, 1])
 
 dp = p_f - p_i
 
@@ -291,9 +291,27 @@ rot_mat_5_6 = np.array([[np.cos(theta__5), - np.sin(theta__5), 0],
                        [np.sin(theta__5), np.cos(theta__5), 0],
                        [0, 0, 1]])
 
-rot_mat_0_6 = rot_mat_0_1 @ rot_mat_1_2 @ rot_mat_2_3 @ rot_mat_3_4 @ rot_mat_4_5 @ rot_mat_5_6
+#rot_mat_0_6 = rot_mat_0_1 @ rot_mat_1_2 @ rot_mat_2_3 @ rot_mat_3_4 @ rot_mat_4_5 @ rot_mat_5_6
 
+
+#this defines the orientation when the joint angles above are used
+print("rot_mat_0_6: ")
 #print(rot_mat_0_6)
+
+#to define the orientation of the end effector, rot_mat_0_6 can be changed
+#for example:
+
+#end effector pointed upwards towards sky
+#rot_mat_0_6 = np.array([[-1, 0, 0],
+                        #[0, -1, 0],
+                        #[0, 0, 1]])
+
+
+#end effector pointed downwards?? this needs verifying
+rot_mat_0_6 = np.array([[1, 0, 0],
+                       [0, 1, 0],
+                       [0, 0, -1]])
+
 
 rot_mat_3_6 = inv_rot_mat_0_3 @ rot_mat_0_6
 rot_mat_3_6 = rot_mat_3_6.round()

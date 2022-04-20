@@ -141,6 +141,8 @@ p6z = np.unique(p6[2])
 #(@ symbol used for matrix multiplication)
 
 transform_0_6 = d_h_table_0_1 @ d_h_table_1_2 @ d_h_table_2_3 @ d_h_table_3_4 @ d_h_table_4_5 @ d_h_table_5_6
+print('transform_0_6')
+print(transform_0_6)
 
 init_printing()
 
@@ -187,7 +189,7 @@ print(p_i)
 
 #final (target) point of the end effector, defined as a relative movement from the initial position, for example moving
 #the arm down in the z-axis by 5cm
-p_f = p_i + Matrix([0, 0, 1])
+p_f = p_i + Matrix([0, 0, 0])
 
 dp = p_f - p_i
 
@@ -246,9 +248,9 @@ while dp.norm() > dp_threshold and j < max_steps:
     # ax.view_init(elev=45, azim=45)
     ax.view_init(elev=10, azim=90)
     ax.plot3D(X, Y, Z, 'blue', marker="o")
-    matplotlib.pyplot.draw()
-    matplotlib.pyplot.show()
-    matplotlib.pyplot.pause(0.1)
+    #matplotlib.pyplot.draw()
+    #matplotlib.pyplot.show()
+    #matplotlib.pyplot.pause(0.1)
 
 
 
@@ -261,7 +263,7 @@ inv_rot_mat_0_3 = np.linalg.inv(rot_mat_0_3)
 
 theta__0 = 0
 theta__1 = int(theta_i.evalf()[0])
-theta__3 = (theta_i.evalf()[2])
+theta__3 = int(theta_i.evalf()[2])
 #print('theta__3: ', theta__3)
 theta__4 = int(theta_i.evalf()[3])
 theta__5 = int(theta_i.evalf()[4])
@@ -291,12 +293,12 @@ rot_mat_5_6 = np.array([[np.cos(theta__5), - np.sin(theta__5), 0],
                        [np.sin(theta__5), np.cos(theta__5), 0],
                        [0, 0, 1]])
 
-#rot_mat_0_6 = rot_mat_0_1 @ rot_mat_1_2 @ rot_mat_2_3 @ rot_mat_3_4 @ rot_mat_4_5 @ rot_mat_5_6
+rot_mat_0_6 = rot_mat_0_1 @ rot_mat_1_2 @ rot_mat_2_3 @ rot_mat_3_4 @ rot_mat_4_5 @ rot_mat_5_6
 
 
 #this defines the orientation when the joint angles above are used
 print("rot_mat_0_6: ")
-#print(rot_mat_0_6)
+print(rot_mat_0_6)
 
 #to define the orientation of the end effector, rot_mat_0_6 can be changed
 #for example:
@@ -308,14 +310,18 @@ print("rot_mat_0_6: ")
 
 
 #end effector pointed downwards?? this needs verifying
-rot_mat_0_6 = np.array([[1, 0, 0],
-                       [0, 1, 0],
-                       [0, 0, -1]])
+#rot_mat_0_6 = np.array([[0, 0, 1],
+                       #[-1, 0, 0],
+                       #[0, -1, 0]])
+
+
+
 
 
 rot_mat_3_6 = inv_rot_mat_0_3 @ rot_mat_0_6
 rot_mat_3_6 = rot_mat_3_6.round()
-#print(rot_mat_3_6)
+print('rot_mat_3_6')
+print(rot_mat_3_6)
 
 new_theta5 = np.arccos(rot_mat_3_6[2,2])
 #print(f'theta 5 = {new_theta5} radians')
@@ -342,6 +348,48 @@ print(third_angle)
 print(fourth_angle)
 print(fifth_angle)
 print(sixth_angle)
+
+
+p0sub2 = p0.subs({theta1: first_angle, theta2: second_angle, theta3: third_angle, theta4: fourth_angle, theta5: fifth_angle,
+                     theta6: sixth_angle}).evalf()
+p1sub2 = p1.subs({theta1: first_angle, theta2: second_angle, theta3: third_angle, theta4: fourth_angle, theta5: fifth_angle,
+                     theta6: sixth_angle}).evalf()
+p2sub2 = p2.subs({theta1: first_angle, theta2: second_angle, theta3: third_angle, theta4: fourth_angle, theta5: fifth_angle,
+                     theta6: sixth_angle}).evalf()
+p3sub2 = p3.subs({theta1: first_angle, theta2: second_angle, theta3: third_angle, theta4: fourth_angle, theta5: fifth_angle,
+                     theta6: sixth_angle}).evalf()
+p4sub2 = p4.subs({theta1: first_angle, theta2: second_angle, theta3: third_angle, theta4: fourth_angle, theta5: fifth_angle,
+                     theta6: sixth_angle}).evalf()
+p5sub2 = p5.subs({theta1: first_angle, theta2: second_angle, theta3: third_angle, theta4: fourth_angle, theta5: fifth_angle,
+                     theta6: sixth_angle}).evalf()
+p6sub2 = p6.subs({theta1: first_angle, theta2: second_angle, theta3: third_angle, theta4: fourth_angle, theta5: fifth_angle,
+                     theta6: sixth_angle}).evalf()
+
+
+
+soa = np.array([p0sub2, p1sub2, p2sub2, p3sub2, p4sub2, p5sub2], dtype=object)
+X, Y, Z, = zip(*soa)
+X = np.array(X)
+Y = np.array(Y)
+Z = np.array(Z)
+X = np.ndarray.flatten(X)
+Y = np.ndarray.flatten(Y)
+Z = np.ndarray.flatten(Z)
+fig = matplotlib.pyplot.figure(1)
+ax = fig.add_subplot(111, projection='3d')
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
+ax.set_xlim([-2000, 2000])
+ax.set_ylim([0, 2000])
+ax.set_zlim([0, 3000])
+# ax.view_init(elev=45, azim=45)
+#ax.view_init(elev=10, azim=90)
+ax.plot3D(X, Y, Z, 'orange', marker="o")
+ax.plot3D(p6sub2[0], p6sub2[1], p6sub2[2], 'red', marker="^")
+matplotlib.pyplot.draw()
+matplotlib.pyplot.show()
+matplotlib.pyplot.pause(0.1)
 
 
 print('\n\nFinal Joint Angles in Radians:\n', theta_i.evalf())

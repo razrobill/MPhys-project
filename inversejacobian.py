@@ -269,29 +269,29 @@ theta__4 = int(theta_i.evalf()[3])
 theta__5 = int(theta_i.evalf()[4])
 theta__6 = int(theta_i.evalf()[5])
 
-rot_mat_0_1 = np.array([[np.cos(theta__0), 0, np.sin(theta__0)],
-                       [np.sin(theta__0), 0, - np.cos(theta__0)],
+rot_mat_0_1 = np.array([[np.cos(theta__1), 0, np.sin(theta__1)],
+                       [np.sin(theta__1), 0, - np.cos(theta__1)],
                        [0, 1, 0]])
 
-rot_mat_1_2 = np.array([[- np.sin(theta__1), np.cos(theta__1), 0],
-                       [np.cos(theta__1), np.sin(theta__1), 0],
+rot_mat_1_2 = np.array([[- np.sin(theta__2), np.cos(theta__2), 0],
+                       [np.cos(theta__2), np.sin(theta__2), 0],
                        [0, 0, 1]])
 
-rot_mat_2_3 = np.array([[np.cos(theta__2), 0, - np.sin(theta__2)],
-                       [np.sin(theta__2), 0, np.cos(theta__2)],
+rot_mat_2_3 = np.array([[np.cos(theta__3), 0, - np.sin(theta__3)],
+                       [np.sin(theta__3), 0, np.cos(theta__3)],
                        [0, 1, 0]])
 
-rot_mat_3_4 = np.array([[math.cos(theta__3), 0, - math.sin(theta__3)],
-                       [math.sin(theta__3), 0, math.cos(theta__3)],
+rot_mat_3_4 = np.array([[math.cos(theta__4), 0, - math.sin(theta__4)],
+                       [math.sin(theta__4), 0, math.cos(theta__4)],
                        [0, 1, 0]])
 
-rot_mat_4_5 = np.array([[np.cos(theta__4), 0,  - np.sin(theta__4)],
-                        [np.sin(theta__4), 0, np.cos(theta__4)],
+rot_mat_4_5 = np.array([[np.cos(theta__5), 0,  - np.sin(theta__5)],
+                        [np.sin(theta__5), 0, np.cos(theta__5)],
                         [0, 1, 0]])
 
-rot_mat_5_6 = np.array([[np.cos(theta__5), - np.sin(theta__5), 0],
-                       [np.sin(theta__5), np.cos(theta__5), 0],
-                       [0, 0, 1]])
+rot_mat_5_6 = np.array([[np.cos(theta__6), np.sin(theta__6),  0],
+                        [np.sin(theta__6), np.cos(theta__6), 0],
+                        [0, 0, 1]])
 
 rot_mat_0_6 = rot_mat_0_1 @ rot_mat_1_2 @ rot_mat_2_3 @ rot_mat_3_4 @ rot_mat_4_5 @ rot_mat_5_6
 

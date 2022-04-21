@@ -189,7 +189,7 @@ print(p_i)
 
 #final (target) point of the end effector, defined as a relative movement from the initial position, for example moving
 #the arm down in the z-axis by 5cm
-p_f = p_i + Matrix([0, 0, 0])
+p_f = p_i + Matrix([0, 0, 500])
 
 dp = p_f - p_i
 
@@ -197,7 +197,7 @@ dp_threshold = 5
 dp_step = 1
 theta_max_step = 0.5
 j = 0
-max_steps = 50
+max_steps = 500
 
 while dp.norm() > dp_threshold and j < max_steps:
     print(f'step{j}: θ[{theta_i}, P[{p_i}]')
@@ -248,9 +248,10 @@ while dp.norm() > dp_threshold and j < max_steps:
     # ax.view_init(elev=45, azim=45)
     ax.view_init(elev=10, azim=90)
     ax.plot3D(X, Y, Z, 'blue', marker="o")
-    #matplotlib.pyplot.draw()
-    #matplotlib.pyplot.show()
-    #matplotlib.pyplot.pause(0.1)
+    ax.plot3D(p6sub[0], p6sub[1], p6sub[2], 'red', marker="^")
+    matplotlib.pyplot.draw()
+    matplotlib.pyplot.show()
+    matplotlib.pyplot.pause(0.1)
 
 
 
@@ -289,9 +290,9 @@ rot_mat_4_5 = np.array([[np.cos(theta__5), 0,  - np.sin(theta__5)],
                         [np.sin(theta__5), 0, np.cos(theta__5)],
                         [0, 1, 0]])
 
-rot_mat_5_6 = np.array([[np.cos(theta__6), np.sin(theta__6),  0],
-                        [np.sin(theta__6), np.cos(theta__6), 0],
-                        [0, 0, 1]])
+rot_mat_5_6 = np.array([[np.sin(theta__6), - np.cos(theta__6),  0],
+                        [- np.cos(theta__6), - np.sin(theta__6), 0],
+                        [0, 0, -1]])
 
 rot_mat_0_6 = rot_mat_0_1 @ rot_mat_1_2 @ rot_mat_2_3 @ rot_mat_3_4 @ rot_mat_4_5 @ rot_mat_5_6
 
@@ -388,7 +389,7 @@ ax.set_zlim([0, 3000])
 ax.plot3D(X, Y, Z, 'orange', marker="o")
 ax.plot3D(p6sub2[0], p6sub2[1], p6sub2[2], 'red', marker="^")
 matplotlib.pyplot.draw()
-matplotlib.pyplot.show()
+#matplotlib.pyplot.show()
 matplotlib.pyplot.pause(0.1)
 
 

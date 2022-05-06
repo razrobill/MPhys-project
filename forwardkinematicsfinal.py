@@ -250,15 +250,15 @@ if __name__ == '__main__':
 
     kr360 = kr360()
 
-    endeffector = kr360.forward_kinematics(0, 90, 1, 0, 0, 0)
+    endeffector = kr360.forward_kinematics(0, 90, 0, 0, 0, 0)
     print('end effector position: ')
     print(endeffector)
     last_column = endeffector[:, 3]
     end_effector_position = np.delete(last_column, 3, 0)
-    print(end_effector_position)
-    jointcoordinates = kr360.find_joint_positions(0, 90, 1, 0, 0, 0)
+    #print(end_effector_position)
+    jointcoordinates = kr360.find_joint_positions(0, 90, 0, 0, 0, 0)
     #validity2 = kr360.valid_theta_configurations(2, 200, 'angle')
-    all_theta_configurations = [0, 90, 1, 0, 0, 0]
+    all_theta_configurations = [0, 90, 0, 0, 0, 0]
     check = kr360.check_configuration(all_theta_configurations)
     #print(check)
 

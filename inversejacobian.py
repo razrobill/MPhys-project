@@ -10,6 +10,9 @@ from sympy import Matrix, Symbol, symbols, solveset, solve, simplify, diff, det
 from sympy import S, erf, log, sqrt, pi, sin, cos, tan
 from sympy import init_printing
 
+plt.rcParams["font.family"] = 'Times New Roman'
+plt.rcParams["figure.autolayout"] = True
+
 #d-h parameters in mm
 a1 = 500
 a2 = 1300
@@ -189,7 +192,7 @@ print(p_i)
 
 #final (target) point of the end effector, defined as a relative movement from the initial position, for example moving
 #the arm down in the z-axis by 5cm
-p_f = p_i + Matrix([0, 0, 500])
+p_f = p_i + Matrix([0, 0, 0])
 
 dp = p_f - p_i
 
@@ -229,29 +232,29 @@ while dp.norm() > dp_threshold and j < max_steps:
                      theta6: theta_i[5]}).evalf()
     p6sub = p6.subs({theta1: theta_i[0], theta2: theta_i[1], theta3: theta_i[2], theta4: theta_i[3], theta5: theta_i[4],
                      theta6: theta_i[5]}).evalf()
-    soa = np.array([p0sub, p1sub, p2sub, p3sub, p4sub, p5sub, p6sub], dtype=object)
-    X, Y, Z, = zip(*soa)
-    X = np.array(X)
-    Y = np.array(Y)
-    Z = np.array(Z)
-    X = np.ndarray.flatten(X)
-    Y = np.ndarray.flatten(Y)
-    Z = np.ndarray.flatten(Z)
-    fig = matplotlib.pyplot.figure(1)
-    ax = fig.add_subplot(111, projection='3d')
-    ax.set_xlabel("X")
-    ax.set_ylabel("Y")
-    ax.set_zlabel("Z")
-    ax.set_xlim([-2000, 2000])
-    ax.set_ylim([0, 2000])
-    ax.set_zlim([0, 3000])
+    #soa = np.array([p0sub, p1sub, p2sub, p3sub, p4sub, p5sub, p6sub], dtype=object)
+    #X, Y, Z, = zip(*soa)
+    #X = np.array(X)
+    #Y = np.array(Y)
+    #Z = np.array(Z)
+    #X = np.ndarray.flatten(X)
+    #Y = np.ndarray.flatten(Y)
+    #Z = np.ndarray.flatten(Z)
+    #fig = matplotlib.pyplot.figure(1)
+    #ax = fig.add_subplot(111, projection='3d')
+    #ax.set_xlabel("X")
+    #ax.set_ylabel("Y")
+    #ax.set_zlabel("Z")
+    #ax.set_xlim([-2000, 2000])
+    #ax.set_ylim([0, 2000])
+    #ax.set_zlim([0, 3000])
     # ax.view_init(elev=45, azim=45)
-    ax.view_init(elev=10, azim=90)
-    ax.plot3D(X, Y, Z, 'blue', marker="o")
-    ax.plot3D(p6sub[0], p6sub[1], p6sub[2], 'red', marker="^")
-    matplotlib.pyplot.draw()
-    matplotlib.pyplot.show()
-    matplotlib.pyplot.pause(0.1)
+    #ax.view_init(elev=10, azim=90)
+    #ax.plot3D(X, Y, Z, 'blue', marker="o")
+    #ax.plot3D(p6sub[0], p6sub[1], p6sub[2], 'red', marker="^")
+    #matplotlib.pyplot.draw()
+    #matplotlib.pyplot.show()
+    #matplotlib.pyplot.pause(0.1)
 
 
 
@@ -290,9 +293,9 @@ rot_mat_4_5 = np.array([[np.cos(theta__5), 0,  - np.sin(theta__5)],
                         [np.sin(theta__5), 0, np.cos(theta__5)],
                         [0, 1, 0]])
 
-rot_mat_5_6 = np.array([[np.sin(theta__6), - np.cos(theta__6),  0],
-                        [- np.cos(theta__6), - np.sin(theta__6), 0],
-                        [0, 0, -1]])
+rot_mat_5_6 = np.array([[np.sin(theta__6), 0, - np.cos(theta__6)],
+                        [- np.cos(theta__6), 0, - np.sin(theta__6)],
+                        [0, -1, 0]])
 
 rot_mat_0_6 = rot_mat_0_1 @ rot_mat_1_2 @ rot_mat_2_3 @ rot_mat_3_4 @ rot_mat_4_5 @ rot_mat_5_6
 
@@ -368,7 +371,8 @@ p6sub2 = p6.subs({theta1: first_angle, theta2: second_angle, theta3: third_angle
 
 
 
-soa = np.array([p0sub2, p1sub2, p2sub2, p3sub2, p4sub2, p5sub2], dtype=object)
+soa = np.array([p0sub2, p1sub2, p2sub2, p3sub2, p4sub2, p5sub2, p6sub2], dtype=object)
+#soa2 = np.array([p6sub2])
 X, Y, Z, = zip(*soa)
 X = np.array(X)
 Y = np.array(Y)
@@ -376,18 +380,31 @@ Z = np.array(Z)
 X = np.ndarray.flatten(X)
 Y = np.ndarray.flatten(Y)
 Z = np.ndarray.flatten(Z)
+#X2, Y2, Z2, = zip(*soa2)
+#X2 = np.array(X2)
+#Y2 = np.array(Y2)
+#Z2 = np.array(Z2)
 fig = matplotlib.pyplot.figure(1)
 ax = fig.add_subplot(111, projection='3d')
-ax.set_xlabel("X")
-ax.set_ylabel("Y")
-ax.set_zlabel("Z")
+ax.set_xlabel("X (mm)")
+ax.set_ylabel("Y (mm)")
+ax.set_zlabel("Z (mm)")
+matplotlib.pyplot.xticks(fontsize=9)
 ax.set_xlim([-2000, 2000])
 ax.set_ylim([0, 2000])
 ax.set_zlim([0, 3000])
 # ax.view_init(elev=45, azim=45)
 #ax.view_init(elev=10, azim=90)
-ax.plot3D(X, Y, Z, 'orange', marker="o")
-ax.plot3D(p6sub2[0], p6sub2[1], p6sub2[2], 'red', marker="^")
+#ax.plot3D(X2, Y2, Z2, 'red', marker="^", zorder=4)
+#ax.scatter(X2, Y2, Z2, color='red', marker='^', label="End effector position", zorder=1)
+ax.plot3D(X, Y, Z, 'darkorange', marker="o", zorder=3)
+ax.scatter(X, Y, Z, color='darkorange', marker="o", label="Joint positions", zorder=2)
+plt.title("Initial Configuration of KUKA KR 360, with End Effector oriented"
+          "\n downwards")
+ax.plot3D(p6sub2[0], p6sub2[1], p6sub2[2], 'red', marker="^", zorder=4)
+ax.scatter(p6sub2[0], p6sub2[1], p6sub2[2], color='red', marker="^", label="End effector position", zorder=1)
+plt.legend(bbox_to_anchor=(1.05, 1), loc="upper right")
+plt.savefig('orientation_plot3')
 matplotlib.pyplot.draw()
 #matplotlib.pyplot.show()
 matplotlib.pyplot.pause(0.1)
